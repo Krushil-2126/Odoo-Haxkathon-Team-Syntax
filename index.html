@@ -11,80 +11,37 @@
             theme: {
                 extend: {
                     colors: {
-                        'saffron': {
-                            50: '#fff7ed',
-                            100: '#ffedd5',
-                            200: '#fed7aa',
-                            300: '#fdba74',
-                            400: '#fb923c',
-                            500: '#f97316',
-                            600: '#ea580c',
-                            700: '#c2410c',
-                            800: '#9a3412',
-                            900: '#7c2d12',
-                            950: '#431407'
-                        },
-                        'teal': {
-                            50: '#f0fdfa',
-                            100: '#ccfbf1',
-                            200: '#99f6e4',
-                            300: '#5eead4',
-                            400: '#2dd4bf',
-                            500: '#14b8a6',
-                            600: '#0d9488',
-                            700: '#0f766e',
-                            800: '#115e59',
-                            900: '#134e4a',
-                            950: '#042f2e'
-                        },
-                        'royal': {
-                            50: '#eff6ff',
-                            100: '#dbeafe',
-                            200: '#bfdbfe',
-                            300: '#93c5fd',
-                            400: '#60a5fa',
-                            500: '#3b82f6',
-                            600: '#2563eb',
-                            700: '#1d4ed8',
-                            800: '#1e40af',
-                            900: '#1e3a8a',
-                            950: '#172554'
-                        },
-                        'neutral': {
-                            50: '#fafafa',
-                            100: '#f5f5f5',
-                            200: '#e5e5e5',
-                            300: '#d4d4d4',
-                            400: '#a3a3a3',
-                            500: '#737373',
-                            600: '#525252',
-                            700: '#404040',
-                            800: '#262626',
-                            900: '#171717',
-                            950: '#0a0a0a'
-                        }
+                        'saffron': { 50: '#fff7ed', 100: '#ffedd5', 200: '#fed7aa', 300: '#fdba74', 400: '#fb923c', 500: '#f97316', 600: '#ea580c', 700: '#c2410c', 800: '#9a3412', 900: '#7c2d12', 950: '#431407' },
+                        'teal': { 50: '#f0fdfa', 100: '#ccfbf1', 200: '#99f6e4', 300: '#5eead4', 400: '#2dd4bf', 500: '#14b8a6', 600: '#0d9488', 700: '#0f766e', 800: '#115e59', 900: '#134e4a', 950: '#042f2e' },
+                        'royal': { 50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 300: '#93c5fd', 400: '#60a5fa', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8', 800: '#1e40af', 900: '#1e3a8a', 950: '#172554' },
+                        'neutral': { 50: '#fafafa', 100: '#f5f5f5', 200: '#e5e5e5', 300: '#d4d4d4', 400: '#a3a3a3', 500: '#737373', 600: '#525252', 700: '#404040', 800: '#262626', 900: '#171717', 950: '#0a0a0a' }
                     },
-                    fontFamily: {
-                        'display': ['Playfair Display', 'serif'],
-                        'body': ['Inter', 'sans-serif']
-                    },
-                    animation: {
-                        'shimmer': 'shimmer 2s linear infinite',
-                        'fadeIn': 'fadeIn 0.5s ease-in-out',
-                        'slideIn': 'slideIn 0.3s ease-out'
+                    fontFamily: { 'display': ['Playfair Display', 'serif'], 'body': ['Inter', 'sans-serif'] },
+                    animation: { 
+                        'shimmer': 'shimmer 2s linear infinite', 
+                        'fadeIn': 'fadeIn 0.5s ease-in-out', 
+                        'slideIn': 'slideIn 0.3s ease-out',
+                        'bounceIn': 'bounceIn 0.6s ease-out',
+                        'pulse': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 3s ease-in-out infinite',
+                        'scaleIn': 'scaleIn 0.3s ease-out'
                     },
                     keyframes: {
-                        shimmer: {
-                            '0%': { backgroundPosition: '-200px 0' },
-                            '100%': { backgroundPosition: 'calc(200px + 100%) 0' }
+                        shimmer: { '0%': { backgroundPosition: '-200px 0' }, '100%': { backgroundPosition: 'calc(200px + 100%) 0' } },
+                        fadeIn: { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+                        slideIn: { '0%': { transform: 'translateX(-100%)' }, '100%': { transform: 'translateX(0)' } },
+                        bounceIn: {
+                            '0%': { transform: 'scale(0.8)', opacity: '0.5' },
+                            '50%': { transform: 'scale(1.05)', opacity: '1' },
+                            '100%': { transform: 'scale(1)', opacity: '1' }
                         },
-                        fadeIn: {
-                            '0%': { opacity: '0' },
-                            '100%': { opacity: '1' }
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' }
                         },
-                        slideIn: {
-                            '0%': { transform: 'translateY(-20px)', opacity: '0' },
-                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        scaleIn: {
+                            '0%': { transform: 'scale(0.95)', opacity: '0' },
+                            '100%': { transform: 'scale(1)', opacity: '1' }
                         }
                     }
                 }
@@ -92,100 +49,231 @@
         }
     </script>
     <style>
-        .shimmer {
-            background: linear-gradient(90deg, #f97316 0%, #fb923c 50%, #f97316 100%);
-            background-size: 200px 100%;
-            animation: shimmer 2s linear infinite;
+        /* Base Styles */
+        .auth-bg { background-image: url('https://images.unsplash.com/photo-1605000797499-95a51c5269ae?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'); background-size: cover; background-position: center; }
+        .auth-overlay { background: rgba(0, 0, 0, 0.5); }
+        .saffron-gradient { background: linear-gradient(135deg, #f97316 0%, #fb923c 100%); }
+        .saffron-gradient-hover:hover { background: linear-gradient(135deg, #ea580c 0%, #f97316 100%); }
+        .text-shadow { text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); }
+        
+        /* Page Transitions */
+        .page-section { 
+            transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out; 
+            animation: fadeIn 0.5s ease-out;
+        }
+        .page-section.hidden { 
+            opacity: 0; 
+            transform: translateY(20px); 
+            pointer-events: none; 
+            position: absolute; 
+            width: 100%; 
+            top: 0; 
+            left: 0; 
         }
         
-        .saffron-gradient {
-            background: linear-gradient(135deg, #f97316 0%, #fb923c 100%);
+        /* Modal Animations */
+        #ask-question-modal { 
+            transition: opacity 0.3s ease-out; 
+            animation: fadeIn 0.3s ease-out;
+        }
+        #ask-question-modal.hidden { 
+            opacity: 0; 
+            pointer-events: none; 
+        }
+        #ask-question-modal .bg-white { 
+            transition: transform 0.3s ease-out; 
+            animation: scaleIn 0.3s ease-out;
+        }
+        #ask-question-modal.hidden .bg-white { 
+            transform: translateY(-50px) scale(0.95); 
         }
         
-        .saffron-gradient-hover:hover {
-            background: linear-gradient(135deg, #ea580c 0%, #f97316 100%);
+        /* Card Animations & Hovers */
+        .question-card, .feature-card, .team-member-card, .category-card { 
+            transition: all 0.3s ease-in-out; 
+            animation: bounceIn 0.6s ease-out;
+        }
+        .question-card:hover { 
+            transform: translateY(-4px); 
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1); 
+        }
+        .feature-card { 
+            border-left: 4px solid transparent; 
+        }
+        .feature-card:hover { 
+            transform: translateY(-5px); 
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1); 
+            border-left-color: #f97316; 
+        }
+        .team-member-card:hover { 
+            transform: translateY(-5px); 
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1); 
+        }
+        .category-card:hover { 
+            transform: translateY(-8px) scale(1.02); 
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1); 
+        }
+        .category-selected { 
+            transform: translateY(-4px) scale(1.03); 
+            box-shadow: 0 16px 32px rgba(249, 115, 22, 0.3); 
+            border-color: #f97316 !important; 
+            animation: pulse 2s infinite;
         }
         
-        .text-shadow {
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        /* Timeline Styles */
+        .timeline-item:not(:last-child)::after { 
+            content: ''; 
+            position: absolute; 
+            left: 20px; 
+            top: 40px; 
+            bottom: -40px; 
+            width: 2px; 
+            background: #e5e5e5; 
         }
-
-        .page-section {
-            display: none;
+        
+        /* Rich Text Editor & Tags Input Styles */
+        .editor-container { 
+            border: 1px solid #d4d4d4; 
+            border-radius: 0.5rem; 
+            overflow: hidden; 
         }
-
-        .page-section.active {
-            display: block;
-            animation: fadeIn 0.5s ease-in-out;
+        .editor-toolbar { 
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 4px; 
+            padding: 8px; 
+            background-color: #f5f5f5; 
+            border-bottom: 1px solid #e5e5e5; 
         }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
+        .editor-toolbar button { 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            width: 32px; 
+            height: 32px; 
+            background: white; 
+            border: 1px solid #d4d4d4; 
+            border-radius: 4px; 
+            cursor: pointer; 
+            transition: all 0.2s; 
         }
-
-        .modal.active {
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .editor-toolbar button:hover { 
+            background-color: #e5e5e5; 
+            transform: scale(1.1);
         }
-
-        .modal-content {
-            background: white;
-            border-radius: 12px;
-            padding: 2rem;
-            max-width: 500px;
-            width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
-            animation: slideIn 0.3s ease-out;
+        .editor-content { 
+            min-height: 200px; 
+            padding: 16px; 
+            outline: none; 
+            line-height: 1.6; 
         }
-
-        .tag-selected {
-            background: #f97316 !important;
-            color: white !important;
+        .editor-content:empty:before { 
+            content: attr(placeholder); 
+            color: #a3a3a3; 
+            pointer-events: none; 
         }
-
-        .category-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        .editor-content pre, .prose pre { 
+            background-color: #1f2937; 
+            color: #f9fafb; 
+            padding: 1rem; 
+            border-radius: 0.5rem; 
+            overflow-x: auto; 
+            margin: 1rem 0; 
+        }
+        .tag-input-container { 
+            display: flex; 
+            flex-wrap: wrap; 
+            align-items: center; 
+            min-height: 48px; 
+            padding: 0 8px; 
+            border: 1px solid #d4d4d4; 
+            border-radius: 0.5rem; 
+            background-color: white; 
+        }
+        .tag-item { 
+            display: flex; 
+            align-items: center; 
+            background-color: #ffedd5; 
+            padding: 4px 8px; 
+            border-radius: 9999px; 
+            margin: 4px; 
+            color: #9a3412; 
+            font-size: 14px; 
+            font-weight: 500; 
+            transition: all 0.2s ease;
+        }
+        .tag-item:hover {
+            transform: scale(1.05);
+        }
+        .tag-close { 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            width: 16px; 
+            height: 16px; 
+            margin-left: 8px; 
+            border-radius: 50%; 
+            background-color: #c2410c; 
+            color: white; 
+            cursor: pointer; 
+            font-size: 12px; 
+            transition: all 0.2s ease;
+        }
+        .tag-close:hover {
+            transform: rotate(90deg);
+        }
+        .tag-input { 
+            flex: 1; 
+            border: none; 
+            height: 46px; 
+            font-size: 14px; 
+            padding: 4px; 
+            background: transparent; 
+        }
+        .tag-input:focus { 
+            outline: none; 
+        }
+        
+        /* Floating animation for featured elements */
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        /* Button hover effects */
+        .btn-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Loading spinner */
+        .spinner {
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body class="bg-gradient-to-br from-saffron-50 to-neutral-50 font-body">
     <!-- Header -->
-    <header class="bg-white shadow-lg border-b-2 border-saffron-500 sticky top-0 z-50">
+    <header class="bg-white shadow-lg border-b-2 border-saffron-500 sticky top-0 z-50 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
-                <!-- Logo -->
                 <div class="flex items-center">
-                    <div class="flex-shrink-0 flex items-center cursor-pointer" onclick="showSection('home')">
-                        <div class="w-10 h-10 saffron-gradient rounded-lg flex items-center justify-center mr-3">
-                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
+                    <div class="flex-shrink-0 flex items-center cursor-pointer" onclick="showHome()">
+                        <div class="w-10 h-10 saffron-gradient rounded-lg flex items-center justify-center mr-3 floating">
+                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                         </div>
-                        <h1 class="text-2xl font-display font-bold text-neutral-900">
-                            Stack<span class="text-saffron-600">It</span>
-                        </h1>
+                        <h1 class="text-2xl font-display font-bold text-neutral-900">Stack<span class="text-saffron-600">It</span></h1>
                     </div>
                 </div>
-
-                <!-- Navigation -->
-                <nav class="hidden md:flex space-x-8">
-                    <a href="#" onclick="showSection('home')" class="nav-link text-neutral-700 hover:text-saffron-600 px-3 py-2 text-sm font-medium transition-colors duration-200">Questions</a>
-                    <a href="#" onclick="showSection('dashboard')" class="nav-link text-neutral-700 hover:text-saffron-600 px-3 py-2 text-sm font-medium transition-colors duration-200">Dashboard</a>
-                    <a href="#" onclick="showSection('categories')" class="nav-link text-neutral-700 hover:text-saffron-600 px-3 py-2 text-sm font-medium transition-colors duration-200">Categories</a>
-                    <a href="#" onclick="showSection('about')" class="nav-link text-neutral-700 hover:text-saffron-600 px-3 py-2 text-sm font-medium transition-colors duration-200">About</a>
+                <nav class="hidden md:flex space-x-8" id="main-nav">
+                    <a href="#" onclick="showHome()" class="text-neutral-700 hover:text-saffron-600 px-3 py-2 text-sm font-medium transition-colors duration-200 hover:scale-105">Questions</a>
+                    <a href="#" onclick="showCategories()" class="text-neutral-700 hover:text-saffron-600 px-3 py-2 text-sm font-medium transition-colors duration-200 hover:scale-105">Categories</a>
+                    <a href="#" onclick="showAbout()" class="text-neutral-700 hover:text-saffron-600 px-3 py-2 text-sm font-medium transition-colors duration-200 hover:scale-105">About</a>
+                    <a href="#" onclick="showDashboard()" class="text-neutral-700 hover:text-saffron-600 px-3 py-2 text-sm font-medium transition-colors duration-200 hover:scale-105" id="dashboard-link" style="display: none;">Dashboard</a>
                 </nav>
-
-                <!-- Search Bar -->
                 <div class="flex-1 max-w-lg mx-8">
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -193,17 +281,23 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                             </svg>
                         </div>
-                        <input type="text" id="searchInput" placeholder="Search questions..." class="w-full pl-10 pr-4 py-2 border border-neutral-200 rounded-lg focus:ring-2 focus:ring-saffron-500 focus:border-saffron-500 bg-white text-neutral-900 placeholder-neutral-500">
+                        <input type="text" placeholder="Search questions..." class="w-full pl-10 pr-4 py-2 border border-neutral-200 rounded-lg focus:ring-2 focus:ring-saffron-500 focus:border-saffron-500 bg-white text-neutral-900 placeholder-neutral-500 transition-all duration-200 focus:scale-[1.02]">
                     </div>
                 </div>
-
-                <!-- Auth Buttons -->
-                <div class="flex items-center space-x-4">
-                    <button onclick="showModal('loginModal')" class="px-4 py-2 text-neutral-700 hover:text-saffron-600 font-medium transition-colors duration-200">
-                        Login
-                    </button>
-                    <button onclick="showModal('signupModal')" class="px-6 py-2 saffron-gradient saffron-gradient-hover text-white font-medium rounded-lg transition-all duration-200 transform hover:scale-105 shadow-lg">
-                        Sign Up
+                <div class="flex items-center space-x-4" id="auth-buttons">
+                    <button onclick="showLogin()" class="px-4 py-2 text-neutral-700 hover:text-saffron-600 font-medium transition-colors duration-200 hover:scale-105">Login</button>
+                    <button onclick="showSignup()" class="px-6 py-2 saffron-gradient hover:saffron-gradient-hover text-white font-medium rounded-lg transition-all duration-200 transform hover:scale-105 shadow-lg btn-hover">Sign Up</button>
+                </div>
+                <div class="flex items-center space-x-4" id="user-profile" style="display: none;">
+                    <button onclick="showAskQuestion()" class="px-4 py-2 saffron-gradient hover:saffron-gradient-hover text-white font-medium rounded-lg transition-all duration-200 transform hover:scale-105 shadow-md text-sm btn-hover">Ask Question</button>
+                    <div class="relative">
+                        <button class="flex items-center space-x-2 focus:outline-none group" onclick="showProfile()">
+                            <img class="h-8 w-8 rounded-full transition-transform duration-200 group-hover:scale-110" src="https://randomuser.me/api/portraits/men/32.jpg" alt="User" id="user-avatar">
+                            <span class="hidden md:inline text-sm font-medium text-neutral-700 group-hover:text-saffron-600 transition-colors duration-200" id="user-name-nav">User</span>
+                        </button>
+                    </div>
+                    <button onclick="logout()" class="text-neutral-500 hover:text-saffron-600 transition-colors duration-200 transform hover:scale-110" title="Logout">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
                     </button>
                 </div>
             </div>
@@ -211,750 +305,1065 @@
     </header>
 
     <!-- Main Content Container -->
-    <div id="mainContent">
-        <!-- Home Section -->
-        <section id="home" class="page-section active">
+    <div id="app-container" class="relative">
+        <!-- Home Page -->
+        <div id="home-page" class="page-section">
             <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                <!-- Hero Section -->
                 <div class="text-center mb-12">
-                    <h2 class="text-4xl md:text-5xl font-display font-bold text-neutral-900 mb-4 text-shadow">
-                        Share Knowledge, Get <span class="text-saffron-600">Answers</span>
-                    </h2>
-                    <p class="text-xl text-neutral-600 mb-8 max-w-2xl mx-auto">
-                        Join our global community of experts and learners. Ask questions, share insights, and grow together.
-                    </p>
-                    <button onclick="showModal('questionModal')" class="saffron-gradient saffron-gradient-hover text-white font-semibold px-8 py-4 rounded-lg text-lg transition-all duration-200 transform hover:scale-105 shadow-xl shimmer">
-                        Ask a Question
+                    <h2 class="text-4xl md:text-5xl font-display font-bold text-neutral-900 mb-4 text-shadow animate-float">Share Knowledge, Get <span class="text-saffron-600">Answers</span></h2>
+                    <p class="text-xl text-neutral-600 mb-8 max-w-2xl mx-auto">Join our global community of experts and learners. Ask questions, share insights, and grow together.</p>
+                    <button onclick="showAskQuestion()" class="saffron-gradient hover:saffron-gradient-hover text-white font-semibold px-8 py-4 rounded-lg text-lg transition-all duration-200 transform hover:scale-105 shadow-xl shimmer btn-hover">Ask a Question</button>
+                </div>
+                <div class="space-y-6">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                        <h3 class="text-2xl font-display font-semibold text-neutral-900">Latest Questions</h3>
+                    </div>
+                    <div id="questions-container" class="space-y-6">
+                         <!-- Sample question card -->
+                         <div class="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-neutral-100 question-card">
+                            <div class="p-6">
+                                <div class="flex items-start justify-between">
+                                    <div class="flex space-x-4 w-full">
+                                        <div class="flex flex-col items-center space-y-1 text-center w-12">
+                                            <span class="text-lg font-semibold text-neutral-700 vote-count">42</span>
+                                            <span class="text-xs text-neutral-500">votes</span>
+                                            <span class="mt-2 bg-green-100 text-green-800 px-2 py-1 rounded text-xs">5 ans</span>
+                                            <span class="mt-1 text-xs text-neutral-500">234 views</span>
+                                        </div>
+                                        <div class="flex-1">
+                                            <h4 onclick="showQuestionDetail('question-1')" class="text-xl font-semibold text-neutral-900 mb-2 hover:text-saffron-600 cursor-pointer transition-colors duration-200">How to join 2 columns in a data set to make a separate column in SQL</h4>
+                                            <p class="text-neutral-600 mb-4 text-sm">I do not know the code for it as I am a beginner. As an example what I need to do is like there is a column 1 containing First name and column 2 consists of last name I want a column to combine...</p>
+                                            <div class="flex flex-wrap gap-2 mb-4">
+                                                <span class="px-3 py-1 bg-saffron-100 text-saffron-800 rounded-full text-sm font-medium">sql</span>
+                                                <span class="px-3 py-1 bg-teal-100 text-teal-800 rounded-full text-sm font-medium">database</span>
+                                            </div>
+                                            <div class="flex items-center justify-end mt-4 pt-4 border-t border-neutral-100">
+                                                <div class="flex items-center space-x-2">
+                                                    <img class="w-8 h-8 rounded-full transition-transform duration-200 hover:scale-110" src="https://randomuser.me/api/portraits/men/32.jpg" alt="User Name">
+                                                    <div>
+                                                        <p class="text-sm font-medium text-neutral-900">Rahul Kapoor</p>
+                                                        <p class="text-xs text-neutral-500">asked 2 hours ago</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- More sample questions will be loaded here -->
+                    </div>
+                    <div class="flex justify-center">
+                        <button onclick="loadMoreQuestions()" class="px-6 py-3 border border-saffron-500 text-saffron-600 font-medium rounded-lg hover:bg-saffron-50 transition-colors duration-200 transform hover:scale-105 btn-hover">Load More Questions</button>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- Login Page -->
+        <div id="login-page" class="page-section hidden">
+            <div class="min-h-screen flex items-center justify-center p-4">
+                <div class="w-full max-w-md">
+                    <div class="text-center mb-8">
+                        <div class="w-16 h-16 saffron-gradient rounded-lg flex items-center justify-center mx-auto mb-4 animate-bounce"><svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div>
+                        <h1 class="text-3xl font-display font-bold text-neutral-900">Stack<span class="text-saffron-600">It</span></h1>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-lg p-8 animate-scaleIn">
+                        <h2 class="text-2xl font-display font-semibold text-neutral-900 mb-1">Welcome back</h2>
+                        <p class="text-neutral-600 mb-6">Sign in to your account to continue</p>
+                        <form id="login-form" class="space-y-6">
+                            <div><label for="login-email" class="block text-sm font-medium text-neutral-700 mb-1">Email address</label><input id="login-email" name="email" type="email" autocomplete="email" required class="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-saffron-500 focus:border-saffron-500 transition-all duration-200 focus:scale-[1.02]" placeholder="you@example.com"></div>
+                            <div><label for="login-password" class="block text-sm font-medium text-neutral-700 mb-1">Password</label><input id="login-password" name="password" type="password" autocomplete="current-password" required class="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-saffron-500 focus:border-saffron-500 transition-all duration-200 focus:scale-[1.02]" placeholder="••••••••"></div>
+                            <div class="flex items-center justify-between"><div class="flex items-center"><input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 text-saffron-600 focus:ring-saffron-500 border-neutral-300 rounded"><label for="remember-me" class="ml-2 block text-sm text-neutral-700">Remember me</label></div><div class="text-sm"><a href="#" class="font-medium text-saffron-600 hover:text-saffron-500">Forgot password?</a></div></div>
+                            <div><button type="submit" class="w-full saffron-gradient saffron-gradient-hover text-white font-medium py-3 px-4 rounded-lg transition-all duration-200 transform hover:scale-[1.02] shadow-lg btn-hover">Sign in</button></div>
+                        </form>
+                        <div class="mt-6 text-center"><p class="text-sm text-neutral-600">Don't have an account? <a href="#" onclick="showSignup()" class="font-medium text-saffron-600 hover:text-saffron-500">Sign up</a></p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Signup Page -->
+        <div id="signup-page" class="page-section hidden">
+            <div class="min-h-screen flex items-center justify-center p-4">
+                 <div class="w-full max-w-md">
+                    <div class="text-center mb-8"><div class="w-16 h-16 saffron-gradient rounded-lg flex items-center justify-center mx-auto mb-4 animate-bounce"><svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div><h1 class="text-3xl font-display font-bold text-neutral-900">Stack<span class="text-saffron-600">It</span></h1></div>
+                    <div class="bg-white rounded-xl shadow-lg p-8 animate-scaleIn">
+                        <h2 class="text-2xl font-display font-semibold text-neutral-900 mb-1">Create your account</h2>
+                        <p class="text-neutral-600 mb-6">Join our community today</p>
+                        <form id="signup-form" class="space-y-4">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div><label for="first-name" class="block text-sm font-medium text-neutral-700 mb-1">First name</label><input id="first-name" name="first-name" type="text" autocomplete="given-name" required class="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-saffron-500 focus:border-saffron-500 transition-all duration-200 focus:scale-[1.02]" placeholder="First name"></div>
+                                <div><label for="last-name" class="block text-sm font-medium text-neutral-700 mb-1">Last name</label><input id="last-name" name="last-name" type="text" autocomplete="family-name" required class="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-saffron-500 focus:border-saffron-500 transition-all duration-200 focus:scale-[1.02]" placeholder="Last name"></div>
+                            </div>
+                            <div><label for="signup-email" class="block text-sm font-medium text-neutral-700 mb-1">Email address</label><input id="signup-email" name="email" type="email" autocomplete="email" required class="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-saffron-500 focus:border-saffron-500 transition-all duration-200 focus:scale-[1.02]" placeholder="you@example.com"></div>
+                            <div><label for="signup-password" class="block text-sm font-medium text-neutral-700 mb-1">Password</label><input id="signup-password" name="password" type="password" autocomplete="new-password" required class="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-saffron-500 focus:border-saffron-500 transition-all duration-200 focus:scale-[1.02]" placeholder="••••••••"><p class="mt-1 text-xs text-neutral-500">Must be at least 8 characters</p></div>
+                            <div><label for="confirm-password" class="block text-sm font-medium text-neutral-700 mb-1">Confirm Password</label><input id="confirm-password" name="confirm-password" type="password" autocomplete="new-password" required class="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-saffron-500 focus:border-saffron-500 transition-all duration-200 focus:scale-[1.02]" placeholder="••••••••"></div>
+                            <div class="flex items-center"><input id="terms" name="terms" type="checkbox" class="h-4 w-4 text-saffron-600 focus:ring-saffron-500 border-neutral-300 rounded"><label for="terms" class="ml-2 block text-sm text-neutral-700">I agree to the <a href="#" class="font-medium text-saffron-600 hover:text-saffron-500">Terms of Service</a></label></div>
+                            <div><button type="submit" class="w-full saffron-gradient saffron-gradient-hover text-white font-medium py-3 px-4 rounded-lg transition-all duration-200 transform hover:scale-[1.02] shadow-lg btn-hover">Create Account</button></div>
+                        </form>
+                        <div class="mt-6 text-center"><p class="text-sm text-neutral-600">Already have an account? <a href="#" onclick="showLogin()" class="font-medium text-saffron-600 hover:text-saffron-500">Sign in</a></p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Question Detail Page -->
+        <div id="question-detail-page" class="page-section hidden">
+            <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                <div class="bg-white rounded-xl shadow-lg border border-neutral-100 mb-8 animate-bounceIn">
+                    <div class="p-6">
+                        <div class="flex items-start space-x-6">
+                            <div class="flex flex-col items-center space-y-3 text-center">
+                                <button onclick="vote('question-detail-up', 1)" class="p-2 hover:bg-saffron-50 rounded-full transition-colors duration-200 transform hover:scale-110"><svg class="w-8 h-8 text-neutral-400 hover:text-saffron-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg></button>
+                                <span class="text-2xl font-bold text-neutral-700" id="question-vote-count">42</span>
+                                <button onclick="vote('question-detail-down', -1)" class="p-2 hover:bg-saffron-50 rounded-full transition-colors duration-200 transform hover:scale-110"><svg class="w-8 h-8 text-neutral-400 hover:text-saffron-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>
+                            </div>
+                            <div class="flex-1">
+                                <h1 class="text-3xl font-display font-bold text-neutral-900 mb-4">How to join 2 columns in a data set to make a separate column in SQL</h1>
+                                <div class="flex flex-wrap gap-2 mb-6"><span class="px-3 py-1 bg-saffron-100 text-saffron-800 rounded-full text-sm font-medium transition-transform duration-200 hover:scale-105">sql</span><span class="px-3 py-1 bg-teal-100 text-teal-800 rounded-full text-sm font-medium transition-transform duration-200 hover:scale-105">database</span></div>
+                                <div class="prose max-w-none text-neutral-700 mb-6"><p>I do not know the code for it as I am a beginner. As an example what I need to do is like there is a column 1 containing First name and column 2 consists of last name I want a column to combine both first name and last name.</p><p>Could someone please help me with this?</p></div>
+                                <div class="flex items-center space-x-2 text-sm text-neutral-500"><img class="w-8 h-8 rounded-full transition-transform duration-200 hover:scale-110" src="https://randomuser.me/api/portraits/men/32.jpg" alt="User Name"><div><p class="text-sm font-medium text-neutral-900">Rahul Kapoor</p><p class="text-xs text-neutral-500">asked 2 hours ago</p></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="answers-section" class="mb-8">
+                    <h2 class="text-2xl font-display font-bold text-neutral-900 mb-6" id="answers-title">1 Answer</h2>
+                    <div class="bg-white rounded-xl shadow-lg border-2 border-green-500 mb-6 animate-bounceIn">
+                        <div class="p-6">
+                            <div class="flex items-start space-x-6">
+                                <div class="flex flex-col items-center space-y-3"><button class="p-2 hover:bg-saffron-50 rounded-full transition-colors duration-200 transform hover:scale-110"><svg class="w-6 h-6 text-neutral-400 hover:text-saffron-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg></button><span class="text-lg font-bold text-neutral-700">15</span><button class="p-2 hover:bg-saffron-50 rounded-full transition-colors duration-200 transform hover:scale-110"><svg class="w-6 h-6 text-neutral-400 hover:text-saffron-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button><div class="p-1 text-green-600" title="Accepted Answer"><svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div></div>
+                                <div class="flex-1">
+                                    <div class="prose max-w-none text-neutral-700 mb-6"><p>You can use the <code>CONCAT</code> function or the <code>||</code> operator to combine columns in SQL:</p><pre><code>SELECT CONCAT(first_name, ' ', last_name) AS full_name FROM your_table;</code></pre><p>Or alternatively:</p><pre><code>SELECT first_name || ' ' || last_name AS full_name FROM your_table;</code></pre></div>
+                                    <div class="flex items-center space-x-2 text-sm text-neutral-500"><img class="w-8 h-8 rounded-full transition-transform duration-200 hover:scale-110" src="https://randomuser.me/api/portraits/women/45.jpg" alt="Priya Sharma"><div><p class="text-sm font-medium text-neutral-900">Priya Sharma</p><p class="text-xs text-neutral-500">answered 1 hour ago</p></div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="submit-answer-section" class="bg-white rounded-xl shadow-lg border border-neutral-100 animate-bounceIn">
+                    <div class="p-6">
+                        <h3 class="text-xl font-display font-bold text-neutral-900 mb-4">Submit Your Answer</h3>
+                        <form id="submit-answer-form" class="space-y-6">
+                            <div class="editor-container">
+                                <div class="editor-toolbar">
+                                    <button type="button" onclick="formatAnswerText('bold')" title="Bold"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M3 4a1 1 0 011-1h6a1 1 0 011 1v2a1 1 0 01-1 1H8v2h2a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4z"></path></svg></button>
+                                    <button type="button" onclick="formatAnswerText('italic')" title="Italic"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M7 3a1 1 0 000 2h2l-2 12H5a1 1 0 100 2h6a1 1 0 100-2h-2l2-12h2a1 1 0 100-2H7z"></path></svg></button>
+                                    <button type="button" onclick="insertAnswerCode()" title="Code"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg></button>
+                                </div>
+                                <div id="answer-editor" contenteditable="true" class="editor-content" placeholder="Write your answer here..."></div>
+                            </div>
+                            <div class="flex justify-end"><button type="submit" class="px-6 py-3 saffron-gradient hover:saffron-gradient-hover text-white rounded-lg transition-all duration-200 transform hover:scale-105 font-semibold btn-hover">Submit Answer</button></div>
+                        </form>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- Dashboard Page -->
+        <div id="dashboard-page" class="page-section hidden">
+            <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                <div class="mb-8"><h2 class="text-3xl font-display font-bold text-neutral-900 mb-2 animate-float">Welcome back, <span id="dashboard-user-name">User</span></h2><p class="text-neutral-600">Here's what's happening in your community today.</p></div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-white rounded-xl shadow-sm p-6 border border-neutral-100 animate-bounceIn"><div class="flex items-center justify-between"><div><p class="text-sm font-medium text-neutral-500">Your Questions</p><p class="text-2xl font-semibold text-neutral-900">14</p></div><div class="p-3 rounded-lg bg-saffron-50 text-saffron-600"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div></div><p class="mt-2 text-xs text-neutral-500">+2 from last week</p></div>
+                    <div class="bg-white rounded-xl shadow-sm p-6 border border-neutral-100 animate-bounceIn" style="animation-delay: 0.1s;"><div class="flex items-center justify-between"><div><p class="text-sm font-medium text-neutral-500">Your Answers</p><p class="text-2xl font-semibold text-neutral-900">27</p></div><div class="p-3 rounded-lg bg-teal-50 text-teal-600"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg></div></div><p class="mt-2 text-xs text-neutral-500">+5 from last week</p></div>
+                    <div class="bg-white rounded-xl shadow-sm p-6 border border-neutral-100 animate-bounceIn" style="animation-delay: 0.2s;"><div class="flex items-center justify-between"><div><p class="text-sm font-medium text-neutral-500">Reputation</p><p class="text-2xl font-semibold text-neutral-900">1,245</p></div><div class="p-3 rounded-lg bg-royal-50 text-royal-600"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg></div></div><p class="mt-2 text-xs text-neutral-500">+128 from last week</p></div>
+                </div>
+                
+                <!-- Recent Activity & Trending Questions -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Recent Activity -->
+                    <div class="bg-white rounded-xl shadow-sm overflow-hidden animate-bounceIn">
+                        <div class="px-6 py-4 border-b border-neutral-200">
+                            <h3 class="text-lg font-medium text-neutral-900">Recent Activity</h3>
+                        </div>
+                        <div class="divide-y divide-neutral-200">
+                            <!-- Activity Item 1 -->
+                            <div class="px-6 py-4">
+                                <div class="flex items-center">
+                                    <img class="h-10 w-10 rounded-full transition-transform duration-200 hover:scale-110" src="https://randomuser.me/api/portraits/men/32.jpg" alt="Rahul Kapoor">
+                                    <div class="ml-4">
+                                        <p class="text-sm font-medium text-neutral-900">Rahul Kapoor upvoted your answer</p>
+                                        <p class="text-sm text-neutral-500">"The best approach would be to use React hooks..."</p>
+                                        <p class="text-xs text-neutral-400 mt-1">2 hours ago</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Activity Item 2 -->
+                            <div class="px-6 py-4">
+                                <div class="flex items-center">
+                                    <img class="h-10 w-10 rounded-full transition-transform duration-200 hover:scale-110" src="https://randomuser.me/api/portraits/women/65.jpg" alt="Ananya Patel">
+                                    <div class="ml-4">
+                                        <p class="text-sm font-medium text-neutral-900">Ananya Patel commented on your question</p>
+                                        <p class="text-sm text-neutral-500">"Have you considered using TypeScript instead?"</p>
+                                        <p class="text-xs text-neutral-400 mt-1">5 hours ago</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Activity Item 3 -->
+                            <div class="px-6 py-4">
+                                <div class="flex items-center">
+                                    <img class="h-10 w-10 rounded-full transition-transform duration-200 hover:scale-110" src="https://randomuser.me/api/portraits/men/54.jpg" alt="Arjun Singh">
+                                    <div class="ml-4">
+                                        <p class="text-sm font-medium text-neutral-900">Arjun Singh accepted your answer</p>
+                                        <p class="text-sm text-neutral-500">"This solved my problem perfectly, thank you!"</p>
+                                        <p class="text-xs text-neutral-400 mt-1">1 day ago</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="px-6 py-4 bg-neutral-50 text-center">
+                            <a href="#" class="text-sm font-medium text-saffron-600 hover:text-saffron-500 transition-colors duration-200">View all activity</a>
+                        </div>
+                    </div>
+
+                    <!-- Trending Questions -->
+                    <div class="bg-white rounded-xl shadow-sm overflow-hidden animate-bounceIn" style="animation-delay: 0.1s;">
+                        <div class="px-6 py-4 border-b border-neutral-200 flex items-center justify-between">
+                            <h3 class="text-lg font-medium text-neutral-900">Trending in Your Network</h3>
+                            <a href="#" class="text-sm font-medium text-saffron-600 hover:text-saffron-500 transition-colors duration-200">View all</a>
+                        </div>
+                        <div class="divide-y divide-neutral-200">
+                            <!-- Question 1 -->
+                            <div class="px-6 py-4">
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0 h-16 w-16 bg-royal-50 rounded-lg flex items-center justify-center text-royal-600">
+                                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="ml-4">
+                                        <h4 class="text-base font-medium text-neutral-900 mb-1">How to implement JWT authentication in Node.js?</h4>
+                                        <p class="text-sm text-neutral-500">Asked by Neha Gupta</p>
+                                        <div class="mt-2 flex items-center text-xs text-neutral-500">
+                                            <span>24 answers</span>
+                                            <span class="mx-2">•</span>
+                                            <span>156 upvotes</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Question 2 -->
+                            <div class="px-6 py-4">
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0 h-16 w-16 bg-teal-50 rounded-lg flex items-center justify-center text-teal-600">
+                                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="ml-4">
+                                        <h4 class="text-base font-medium text-neutral-900 mb-1">Best practices for microservices architecture in 2024?</h4>
+                                        <p class="text-sm text-neutral-500">Asked by Vikram Joshi</p>
+                                        <div class="mt-2 flex items-center text-xs text-neutral-500">
+                                            <span>18 answers</span>
+                                            <span class="mx-2">•</span>
+                                            <span>98 upvotes</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Question 3 -->
+                            <div class="px-6 py-4">
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0 h-16 w-16 bg-royal-50 rounded-lg flex items-center justify-center text-royal-600">
+                                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="ml-4">
+                                        <h4 class="text-base font-medium text-neutral-900 mb-1">How to optimize MongoDB queries for large datasets?</h4>
+                                        <p class="text-sm text-neutral-500">Asked by Deepika Reddy</p>
+                                        <div class="mt-2 flex items-center text-xs text-neutral-500">
+                                            <span>12 answers</span>
+                                            <span class="mx-2">•</span>
+                                            <span>76 upvotes</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Your Top Questions -->
+                <div class="mt-8 bg-white rounded-xl shadow-sm overflow-hidden animate-bounceIn" style="animation-delay: 0.2s;">
+                    <div class="px-6 py-4 border-b border-neutral-200">
+                        <h3 class="text-lg font-medium text-neutral-900">Your Top Questions</h3>
+                    </div>
+                    <div class="divide-y divide-neutral-200">
+                        <!-- Question 1 -->
+                        <div class="px-6 py-4">
+                            <h4 class="text-base font-medium text-neutral-900 mb-2 hover:text-saffron-600 cursor-pointer transition-colors duration-200">How to implement role-based access control in React applications?</h4>
+                            <div class="flex flex-wrap gap-2 mb-3">
+                                <span class="px-2 py-1 bg-saffron-100 text-saffron-800 rounded-full text-xs font-medium transition-transform duration-200 hover:scale-105">react</span>
+                                <span class="px-2 py-1 bg-teal-100 text-teal-800 rounded-full text-xs font-medium transition-transform duration-200 hover:scale-105">authentication</span>
+                                <span class="px-2 py-1 bg-royal-100 text-royal-800 rounded-full text-xs font-medium transition-transform duration-200 hover:scale-105">security</span>
+                            </div>
+                            <div class="flex items-center text-sm text-neutral-500">
+                                <span>8 answers</span>
+                                <span class="mx-2">•</span>
+                                <span>42 upvotes</span>
+                                <span class="mx-2">•</span>
+                                <span>Last answered by Aryan Mehta 2 days ago</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Question 2 -->
+                        <div class="px-6 py-4">
+                            <h4 class="text-base font-medium text-neutral-900 mb-2 hover:text-saffron-600 cursor-pointer transition-colors duration-200">Best state management solution for large-scale Next.js applications?</h4>
+                            <div class="flex flex-wrap gap-2 mb-3">
+                                <span class="px-2 py-1 bg-saffron-100 text-saffron-800 rounded-full text-xs font-medium transition-transform duration-200 hover:scale-105">nextjs</span>
+                                <span class="px-2 py-1 bg-teal-100 text-teal-800 rounded-full text-xs font-medium transition-transform duration-200 hover:scale-105">react</span>
+                                <span class="px-2 py-1 bg-royal-100 text-royal-800 rounded-full text-xs font-medium transition-transform duration-200 hover:scale-105">state-management</span>
+                            </div>
+                            <div class="flex items-center text-sm text-neutral-500">
+                                <span>5 answers</span>
+                                <span class="mx-2">•</span>
+                                <span>28 upvotes</span>
+                                <span class="mx-2">•</span>
+                                <span>Last answered by Rohan Desai 1 week ago</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="px-6 py-4 bg-neutral-50 text-center">
+                        <a href="#" class="text-sm font-medium text-saffron-600 hover:text-saffron-500 transition-colors duration-200">View all your questions</a>
+                    </div>
+                </div>
+            </main>
+        </div>
+        
+        <!-- About Page -->
+        <div id="about-page" class="page-section hidden">
+            <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                <section class="text-center mb-16"><h1 class="text-4xl md:text-5xl font-display font-bold text-neutral-900 mb-6 text-shadow animate-float">Empowering Developers Worldwide</h1><p class="text-xl text-neutral-600 max-w-3xl mx-auto">StackIt is a community-driven platform where developers learn, share knowledge, and grow together.</p></section>
+                <section class="mb-20"><div class="bg-white rounded-xl shadow-lg overflow-hidden animate-bounceIn"><div class="md:flex"><div class="md:w-1/2 p-8 md:p-12"><h2 class="text-3xl font-display font-bold text-neutral-900 mb-4">Our Mission</h2><p class="text-neutral-600 mb-6">At StackIt, we believe that knowledge grows when shared. Our mission is to create a platform where developers of all levels can come together to ask questions, share expertise, and collaborate on solving the toughest coding challenges.</p></div><div class="md:w-1/2 bg-saffron-50 flex items-center justify-center p-8"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" alt="Developers collaborating" class="rounded-lg shadow-md w-full h-auto transition-transform duration-500 hover:scale-105"></div></div></div></section>
+                <section class="mb-20"><h2 class="text-3xl font-display font-bold text-center text-neutral-900 mb-4 animate-float">Meet Our Team</h2><p class="text-neutral-600 text-center max-w-2xl mx-auto mb-12">The passionate people behind StackIt who work tirelessly to build the best developer community.</p><div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"><div class="team-member-card bg-white rounded-xl shadow-lg overflow-hidden text-center p-6"><img class="w-24 h-24 rounded-full mx-auto mb-4 transition-transform duration-200 hover:scale-110" src="https://randomuser.me/api/portraits/men/11.jpg" alt="Raj Patel"><h3 class="text-xl font-bold text-neutral-900 mb-1">Raj Patel</h3><p class="text-saffron-600 font-medium mb-3">Founder & CEO</p></div><div class="team-member-card bg-white rounded-xl shadow-lg overflow-hidden text-center p-6"><img class="w-24 h-24 rounded-full mx-auto mb-4 transition-transform duration-200 hover:scale-110" src="https://randomuser.me/api/portraits/women/12.jpg" alt="Priya Sharma"><h3 class="text-xl font-bold text-neutral-900 mb-1">Priya Sharma</h3><p class="text-saffron-600 font-medium mb-3">CTO</p></div><div class="team-member-card bg-white rounded-xl shadow-lg overflow-hidden text-center p-6"><img class="w-24 h-24 rounded-full mx-auto mb-4 transition-transform duration-200 hover:scale-110" src="https://randomuser.me/api/portraits/men/14.jpg" alt="Amit Singh"><h3 class="text-xl font-bold text-neutral-900 mb-1">Amit Singh</h3><p class="text-saffron-600 font-medium mb-3">Head of Community</p></div><div class="team-member-card bg-white rounded-xl shadow-lg overflow-hidden text-center p-6"><img class="w-24 h-24 rounded-full mx-auto mb-4 transition-transform duration-200 hover:scale-110" src="https://randomuser.me/api/portraits/women/15.jpg" alt="Neha Gupta"><h3 class="text-xl font-bold text-neutral-900 mb-1">Neha Gupta</h3><p class="text-saffron-600 font-medium mb-3">Product Manager</p></div></div></section>
+                <section class="mb-20"><h2 class="text-3xl font-display font-bold text-center text-neutral-900 mb-12 animate-float">Our Journey</h2><div class="max-w-3xl mx-auto relative"><div class="relative pl-16 pb-12 timeline-item"><div class="absolute left-0 top-0 flex items-center justify-center w-10 h-10 rounded-full bg-saffron-100 text-saffron-600 z-10"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg></div><div class="bg-white rounded-xl shadow-lg p-6"><h3 class="text-xl font-bold text-neutral-900 mb-2">2018 - Founded</h3><p class="text-neutral-600">StackIt was born out of a college project to create a more developer-friendly Q&A platform.</p></div></div><div class="relative pl-16 pb-12 timeline-item"><div class="absolute left-0 top-0 flex items-center justify-center w-10 h-10 rounded-full bg-teal-100 text-teal-600 z-10"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg></div><div class="bg-white rounded-xl shadow-lg p-6"><h3 class="text-xl font-bold text-neutral-900 mb-2">2019 - First 10,000 Users</h3><p class="text-neutral-600">We hit our first major milestone thanks to word-of-mouth growth in the developer community.</p></div></div><div class="relative pl-16 timeline-item"><div class="absolute left-0 top-0 flex items-center justify-center w-10 h-10 rounded-full bg-royal-100 text-royal-600 z-10"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg></div><div class="bg-white rounded-xl shadow-lg p-6"><h3 class="text-xl font-bold text-neutral-900 mb-2">2023 - 1M+ Users</h3><p class="text-neutral-600">Reached over a million registered developers worldwide, becoming one of the fastest-growing developer communities.</p></div></div></div></section>
+            </main>
+        </div>
+
+        <!-- Categories Page -->
+        <div id="categories-page" class="page-section hidden">
+            <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                <div class="text-center mb-12"><h2 class="text-4xl md:text-5xl font-display font-bold text-neutral-900 mb-4 animate-float">Choose Your <span class="text-saffron-600">Interests</span></h2><p class="text-xl text-neutral-600 mb-8 max-w-2xl mx-auto">Select the categories you're passionate about to personalize your experience.</p></div>
+                <div id="categories-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
+                    <div class="category-card bg-white rounded-xl shadow-lg border-2 border-transparent cursor-pointer p-6 text-center relative overflow-hidden" data-category="technology">
+                        <div class="w-16 h-16 bg-royal-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-royal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-neutral-900 mb-2">Technology</h3>
+                        <p class="text-neutral-600 text-sm">Programming, AI, Software</p>
+                        <div class="category-check hidden absolute top-4 right-4 w-6 h-6 bg-saffron-500 rounded-full flex items-center justify-center">
+                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="category-card bg-white rounded-xl shadow-lg border-2 border-transparent cursor-pointer p-6 text-center relative overflow-hidden" data-category="web-development">
+                        <div class="w-16 h-16 bg-saffron-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-saffron-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-neutral-900 mb-2">Web Development</h3>
+                        <p class="text-neutral-600 text-sm">HTML, CSS, JavaScript, Frameworks</p>
+                        <div class="category-check hidden absolute top-4 right-4 w-6 h-6 bg-saffron-500 rounded-full flex items-center justify-center">
+                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="category-card bg-white rounded-xl shadow-lg border-2 border-transparent cursor-pointer p-6 text-center relative overflow-hidden" data-category="mobile-development">
+                        <div class="w-16 h-16 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-neutral-900 mb-2">Mobile Development</h3>
+                        <p class="text-neutral-600 text-sm">iOS, Android, React Native, Flutter</p>
+                        <div class="category-check hidden absolute top-4 right-4 w-6 h-6 bg-saffron-500 rounded-full flex items-center justify-center">
+                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="category-card bg-white rounded-xl shadow-lg border-2 border-transparent cursor-pointer p-6 text-center relative overflow-hidden" data-category="data-science">
+                        <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-neutral-900 mb-2">Data Science</h3>
+                        <p class="text-neutral-600 text-sm">Python, R, Machine Learning, AI</p>
+                        <div class="category-check hidden absolute top-4 right-4 w-6 h-6 bg-saffron-500 rounded-full flex items-center justify-center">
+                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="category-card bg-white rounded-xl shadow-lg border-2 border-transparent cursor-pointer p-6 text-center relative overflow-hidden" data-category="devops">
+                        <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-neutral-900 mb-2">DevOps</h3>
+                        <p class="text-neutral-600 text-sm">Docker, Kubernetes, CI/CD, Cloud</p>
+                        <div class="category-check hidden absolute top-4 right-4 w-6 h-6 bg-saffron-500 rounded-full flex items-center justify-center">
+                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="category-card bg-white rounded-xl shadow-lg border-2 border-transparent cursor-pointer p-6 text-center relative overflow-hidden" data-category="databases">
+                        <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-neutral-900 mb-2">Databases</h3>
+                        <p class="text-neutral-600 text-sm">SQL, NoSQL, MongoDB, PostgreSQL</p>
+                        <div class="category-check hidden absolute top-4 right-4 w-6 h-6 bg-saffron-500 rounded-full flex items-center justify-center">
+                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="category-card bg-white rounded-xl shadow-lg border-2 border-transparent cursor-pointer p-6 text-center relative overflow-hidden" data-category="cybersecurity">
+                        <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-neutral-900 mb-2">Cybersecurity</h3>
+                        <p class="text-neutral-600 text-sm">Ethical Hacking, Network Security</p>
+                        <div class="category-check hidden absolute top-4 right-4 w-6 h-6 bg-saffron-500 rounded-full flex items-center justify-center">
+                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="category-card bg-white rounded-xl shadow-lg border-2 border-transparent cursor-pointer p-6 text-center relative overflow-hidden" data-category="blockchain">
+                        <div class="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-neutral-900 mb-2">Blockchain</h3>
+                        <p class="text-neutral-600 text-sm">Cryptocurrency, Smart Contracts</p>
+                        <div class="category-check hidden absolute top-4 right-4 w-6 h-6 bg-saffron-500 rounded-full flex items-center justify-center">
+                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button class="px-6 py-3 bg-saffron-500 text-white font-medium rounded-lg hover:bg-saffron-600 transition-colors duration-200 transform hover:scale-105 shadow-lg btn-hover">
+                        Save Preferences
                     </button>
                 </div>
+            </main>
+        </div>
 
-                <!-- Question Cards -->
-                <div class="space-y-6">
-                    <div class="flex justify-between items-center">
-                        <h3 class="text-2xl font-display font-semibold text-neutral-900">Latest Questions</h3>
-                        <div class="flex space-x-2">
-                            <button class="px-4 py-2 bg-saffron-100 text-saffron-700 rounded-lg hover:bg-saffron-200 transition-colors duration-200 font-medium">
-                                Newest
+        <!-- Profile Page -->
+        <div id="profile-page" class="page-section hidden">
+             <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8"><div class="grid grid-cols-1 lg:grid-cols-3 gap-8"><div class="lg:col-span-1"><div class="bg-white rounded-xl shadow-lg border border-neutral-100 overflow-hidden animate-bounceIn"><div class="saffron-gradient p-6 text-white"><div class="flex items-center space-x-4"><img class="w-20 h-20 rounded-full border-4 border-white transition-transform duration-200 hover:scale-110" src="https://randomuser.me/api/portraits/men/32.jpg" alt="Rahul Kapoor"><div id="profile-header-info"><h2 class="text-2xl font-display font-bold">Rahul Kapoor</h2><p class="text-saffron-100">@rahul_kapoor</p></div></div></div><div class="p-6"><div class="grid grid-cols-2 gap-4 mb-6 text-center"><div ><div class="text-2xl font-bold text-saffron-600">156</div><div class="text-sm text-neutral-600">Reputation</div></div><div><div class="text-2xl font-bold text-teal-600">42</div><div class="text-sm text-neutral-600">Questions</div></div><div><div class="text-2xl font-bold text-royal-600">89</div><div class="text-sm text-neutral-600">Answers</div></div><div><div class="text-2xl font-bold text-neutral-600">23</div><div class="text-sm text-neutral-600">Badges</div></div></div><div class="border-t pt-6"><h3 class="text-lg font-semibold text-neutral-900 mb-3">About</h3><p class="text-neutral-600 text-sm mb-4">Startup founder and tech enthusiast from Mumbai. Passionate about AI, fintech, and building products that solve real problems.</p></div></div></div></div><div class="lg:col-span-2"><div class="bg-white rounded-xl shadow-lg border border-neutral-100 mb-6 animate-bounceIn" style="animation-delay: 0.1s;"><div class="border-b border-neutral-200"><nav class="flex space-x-8 px-6"><button class="py-4 px-1 border-b-2 border-saffron-500 text-saffron-600 font-medium text-sm">Questions (42)</button><button class="py-4 px-1 border-b-2 border-transparent text-neutral-500 hover:text-neutral-700 font-medium text-sm">Answers (89)</button></nav></div><div class="p-6"><div class="space-y-6"><div class="border-l-4 border-saffron-500 pl-4"><h4 class="text-lg font-semibold text-neutral-900 mb-2 hover:text-saffron-600 cursor-pointer transition-colors duration-200">What are the emerging trends in India's startup ecosystem in 2024?</h4><div class="flex items-center space-x-4 text-sm text-neutral-500"><span>42 votes</span><span>7 answers</span><span>234 views</span></div></div></div></div></div></div></div></main>
+        </div>
+
+        <!-- Ask Question Modal -->
+        <div id="ask-question-modal" class="fixed inset-0 z-50 hidden">
+            <div class="fixed inset-0 bg-black bg-opacity-50 transition-opacity" onclick="closeAskQuestion()"></div>
+            <div class="fixed inset-0 flex items-center justify-center p-4">
+                <div class="bg-white rounded-xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-2xl font-display font-bold text-neutral-900">Ask a Question</h3>
+                            <button onclick="closeAskQuestion()" class="text-neutral-400 hover:text-neutral-600 transition-colors duration-200 transform hover:rotate-90">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
                             </button>
-                            <button class="px-4 py-2 text-neutral-600 hover:bg-neutral-100 rounded-lg transition-colors duration-200">
-                                Active
-                            </button>
-                            <button class="px-4 py-2 text-neutral-600 hover:bg-neutral-100 rounded-lg transition-colors duration-200">
-                                Votes
-                            </button>
                         </div>
-                    </div>
-
-                    <div id="questionsList">
-                        <!-- Questions will be populated here -->
-                    </div>
-
-                    <!-- Load More Button -->
-                    <div class="text-center mt-8">
-                        <button onclick="loadMoreQuestions()" class="px-8 py-3 bg-white border-2 border-saffron-500 text-saffron-700 font-semibold rounded-lg hover:bg-saffron-50 transition-all duration-200 transform hover:scale-105">
-                            Load More Questions
-                        </button>
+                        <form id="ask-question-form" class="space-y-6">
+                            <div>
+                                <label for="question-title" class="block text-sm font-medium text-neutral-700 mb-2">Question Title</label>
+                                <input type="text" id="question-title" required 
+                                       class="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-saffron-500 focus:border-saffron-500 transition-all duration-200 focus:scale-[1.02]" 
+                                       placeholder="e.g. How to center a div?">
+                                <p class="mt-1 text-xs text-neutral-500">Be specific and imagine you're asking a question to another person</p>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-neutral-700 mb-2">Detailed Explanation</label>
+                                <div class="editor-container">
+                                    <div class="editor-toolbar">
+                                        <button type="button" data-command="bold" title="Bold">
+                                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M3 4a1 1 0 011-1h6a1 1 0 011 1v2a1 1 0 01-1 1H8v2h2a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4z"></path>
+                                            </svg>
+                                        </button>
+                                        <button type="button" data-command="italic" title="Italic">
+                                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M7 3a1 1 0 000 2h2l-2 12H5a1 1 0 100 2h6a1 1 0 100-2h-2l2-12h2a1 1 0 100-2H7z"></path>
+                                            </svg>
+                                        </button>
+                                        <button type="button" data-command="insertUnorderedList" title="Bullet List">
+                                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M5 4a1 1 0 011-1h12a1 1 0 110 2H6a1 1 0 01-1-1zm0 6a1 1 0 011-1h12a1 1 0 110 2H6a1 1 0 01-1-1zm0 6a1 1 0 011-1h12a1 1 0 110 2H6a1 1 0 01-1-1z" clip-rule="evenodd"></path>
+                                            </svg>
+                                        </button>
+                                        <button type="button" data-command="insertOrderedList" title="Numbered List">
+                                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M5 4a1 1 0 011-1h12a1 1 0 110 2H6a1 1 0 01-1-1zm0 6a1 1 0 011-1h12a1 1 0 110 2H6a1 1 0 01-1-1zm0 6a1 1 0 011-1h12a1 1 0 110 2H6a1 1 0 01-1-1z" clip-rule="evenodd"></path>
+                                            </svg>
+                                        </button>
+                                        <button type="button" data-command="createLink" title="Link">
+                                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd"></path>
+                                            </svg>
+                                        </button>
+                                        <button type="button" onclick="insertCode()" title="Code">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                                            </svg>
+                                        </button>
+                                        <button type="button" onclick="insertImage()" title="Image">
+                                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"></path>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <div id="question-body-editor" contenteditable="true" class="editor-content min-h-[200px]" placeholder="Describe your problem in detail... Include all the information someone would need to answer your question"></div>
+                                </div>
+                                <p class="mt-1 text-xs text-neutral-500">Include all the information someone would need to answer your question</p>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-neutral-700 mb-2">Tags</label>
+                                <div class="tag-input-container" id="tag-container">
+                                    <ul id="tags-list" class="flex flex-wrap p-0 m-0"></ul>
+                                    <input type="text" id="tag-input" class="tag-input" placeholder="Add up to 5 tags (e.g. javascript, react, css)">
+                                </div>
+                                <p class="mt-1 text-xs text-neutral-500">Add up to 5 tags to describe what your question is about</p>
+                            </div>
+                            
+                            <div class="flex justify-between items-center pt-4 border-t border-neutral-200">
+                                <div class="flex items-center">
+                                    <input id="notify-me" name="notify-me" type="checkbox" class="h-4 w-4 text-saffron-600 focus:ring-saffron-500 border-neutral-300 rounded">
+                                    <label for="notify-me" class="ml-2 block text-sm text-neutral-700">Notify me of responses</label>
+                                </div>
+                                <div class="flex space-x-3">
+                                    <button type="button" onclick="closeAskQuestion()" class="px-4 py-2 border border-neutral-300 text-neutral-700 font-medium rounded-lg hover:bg-neutral-50 transition-all duration-200">
+                                        Cancel
+                                    </button>
+                                    <button type="submit" class="px-6 py-2 saffron-gradient hover:saffron-gradient-hover text-white font-medium rounded-lg transition-all duration-200 transform hover:scale-105 shadow-lg btn-hover">
+                                        Post Question
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
-            </main>
-        </section>
-
-        <!-- Dashboard Section -->
-        <section id="dashboard" class="page-section">
-            <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                <div class="mb-8">
-                    <h2 class="text-3xl font-display font-bold text-neutral-900 mb-2">Dashboard</h2>
-                    <p class="text-neutral-600">Your activity and statistics</p>
-                </div>
-
-                <!-- Stats Cards -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                    <div class="bg-white p-6 rounded-xl shadow-lg border border-neutral-100">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-sm text-neutral-600">Questions Asked</p>
-                                <p class="text-2xl font-bold text-saffron-600">15</p>
-                            </div>
-                            <div class="w-12 h-12 bg-saffron-100 rounded-lg flex items-center justify-center">
-                                <svg class="w-6 h-6 text-saffron-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-white p-6 rounded-xl shadow-lg border border-neutral-100">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-sm text-neutral-600">Answers Given</p>
-                                <p class="text-2xl font-bold text-teal-600">42</p>
-                            </div>
-                            <div class="w-12 h-12 bg-teal-100 rounded-lg flex items-center justify-center">
-                                <svg class="w-6 h-6 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-white p-6 rounded-xl shadow-lg border border-neutral-100">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-sm text-neutral-600">Reputation</p>
-                                <p class="text-2xl font-bold text-royal-600">1,250</p>
-                            </div>
-                            <div class="w-12 h-12 bg-royal-100 rounded-lg flex items-center justify-center">
-                                <svg class="w-6 h-6 text-royal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-white p-6 rounded-xl shadow-lg border border-neutral-100">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-sm text-neutral-600">Badges</p>
-                                <p class="text-2xl font-bold text-neutral-700">8</p>
-                            </div>
-                            <div class="w-12 h-12 bg-neutral-100 rounded-lg flex items-center justify-center">
-                                <svg class="w-6 h-6 text-neutral-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Recent Activity -->
-                <div class="bg-white rounded-xl shadow-lg border border-neutral-100 p-6">
-                    <h3 class="text-xl font-semibold text-neutral-900 mb-4">Recent Activity</h3>
-                    <div class="space-y-4">
-                        <div class="flex items-center space-x-3 pb-3 border-b border-neutral-100">
-                            <div class="w-8 h-8 bg-saffron-100 rounded-full flex items-center justify-center">
-                                <svg class="w-4 h-4 text-saffron-600" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                </svg>
-                            </div>
-                            <div>
-                                <p class="text-sm text-neutral-900">You asked a question about AI trends</p>
-                                <p class="text-xs text-neutral-500">2 hours ago</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center space-x-3 pb-3 border-b border-neutral-100">
-                            <div class="w-8 h-8 bg-teal-100 rounded-full flex items-center justify-center">
-                                <svg class="w-4 h-4 text-teal-600" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                </svg>
-                            </div>
-                            <div>
-                                <p class="text-sm text-neutral-900">You answered a question about cricket analytics</p>
-                                <p class="text-xs text-neutral-500">1 day ago</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center space-x-3">
-                            <div class="w-8 h-8 bg-royal-100 rounded-full flex items-center justify-center">
-                                <svg class="w-4 h-4 text-royal-600" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
-                                </svg>
-                            </div>
-                            <div>
-                                <p class="text-sm text-neutral-900">You earned the "Helpful" badge</p>
-                                <p class="text-xs text-neutral-500">2 days ago</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </main>
-        </section>
-
-        <!-- Categories Section -->
-        <section id="categories" class="page-section">
-            <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                <div class="mb-8">
-                    <h2 class="text-3xl font-display font-bold text-neutral-900 mb-2">Categories</h2>
-                    <p class="text-neutral-600">Browse questions by category</p>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div class="category-card bg-white p-6 rounded-xl shadow-lg border border-neutral-100 cursor-pointer transition-all duration-300" onclick="filterByCategory('technology')">
-                        <div class="flex items-center mb-4">
-                            <div class="w-12 h-12 bg-saffron-100 rounded-lg flex items-center justify-center mr-4">
-                                <svg class="w-6 h-6 text-saffron-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                                </svg>
-                            </div>
-                            <div>
-                                <h3 class="text-lg font-semibold text-neutral-900">Technology</h3>
-                                <p class="text-sm text-neutral-600">145 questions</p>
-                            </div>
-                        </div>
-                        <p class="text-neutral-600 text-sm">Programming, AI, web development, and more</p>
-                    </div>
-
-                    <div class="category-card bg-white p-6 rounded-xl shadow-lg border border-neutral-100 cursor-pointer transition-all duration-300" onclick="filterByCategory('business')">
-                        <div class="flex items-center mb-4">
-                            <div class="w-12 h-12 bg-teal-100 rounded-lg flex items-center justify-center mr-4">
-                                <svg class="w-6 h-6 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0H8m8 0v2a2 2 0 01-2 2H10a2 2 0 01-2-2V6m8 0H8"></path>
-                                </svg>
-                            </div>
-                            <div>
-                                <h3 class="text-lg font-semibold text-neutral-900">Business</h3>
-                                <p class="text-sm text-neutral-600">92 questions</p>
-                            </div>
-                        </div>
-                        <p class="text-neutral-600 text-sm">Startups, entrepreneurship, finance, and strategy</p>
-                    </div>
-
-                    <div class="category-card bg-white p-6 rounded-xl shadow-lg border border-neutral-100 cursor-pointer transition-all duration-300" onclick="filterByCategory('science')">
-                        <div class="flex items-center mb-4">
-                            <div class="w-12 h-12 bg-royal-100 rounded-lg flex items-center justify-center mr-4">
-                                <svg class="w-6 h-6 text-royal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
-                                </svg>
-                            </div>
-                            <div>
-                                <h3 class="text-lg font-semibold text-neutral-900">Science</h3>
-                                <p class="text-sm text-neutral-600">67 questions</p>
-                            </div>
-                        </div>
-                        <p class="text-neutral-600 text-sm">Physics, chemistry, biology, and research</p>
-                    </div>
-
-                    <div class="category-card bg-white p-6 rounded-xl shadow-lg border border-neutral-100 cursor-pointer transition-all duration-300" onclick="filterByCategory('education')">
-                        <div class="flex items-center mb-4">
-                            <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center mr-4">
-                                <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
-                                </svg>
-                            </div>
-                            <div>
-                                <h3 class="text-lg font-semibold text-neutral-900">Education</h3>
-                                <p class="text-sm text-neutral-600">134 questions</p>
-                            </div>
-                        </div>
-                        <p class="text-neutral-600 text-sm">Learning, career advice, and academic guidance</p>
-                    </div>
-
-                    <div class="category-card bg-white p-6 rounded-xl shadow-lg border border-neutral-100 cursor-pointer transition-all duration-300" onclick="filterByCategory('sports')">
-                        <div class="flex items-center mb-4">
-                            <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mr-4">
-                                <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                                </svg>
-                            </div>
-                            <div>
-                                <h3 class="text-lg font-semibold text-neutral-900">Sports<p class="text-sm text-neutral-600">78 questions</p>
-                            </div>
-                        </div>
-                        <p class="text-neutral-600 text-sm">Cricket, football, analytics, and sports science</p>
-                    </div>
-
-                    <div class="category-card bg-white p-6 rounded-xl shadow-lg border border-neutral-100 cursor-pointer transition-all duration-300" onclick="filterByCategory('lifestyle')">
-                        <div class="flex items-center mb-4">
-                            <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mr-4">
-                                <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
-                                </svg>
-                            </div>
-                            <div>
-                                <h3 class="text-lg font-semibold text-neutral-900">Lifestyle</h3>
-                                <p class="text-sm text-neutral-600">89 questions</p>
-                            </div>
-                        </div>
-                        <p class="text-neutral-600 text-sm">Health, wellness, travel, and personal development</p>
-                    </div>
-                </div>
-            </main>
-        </section>
-
-        <!-- About Section -->
-        <section id="about" class="page-section">
-            <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                <div class="max-w-4xl mx-auto">
-                    <div class="text-center mb-12">
-                        <h2 class="text-4xl font-display font-bold text-neutral-900 mb-4">About StackIt</h2>
-                        <p class="text-xl text-neutral-600">Empowering knowledge sharing in the digital age</p>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-                        <div class="bg-white p-8 rounded-xl shadow-lg border border-neutral-100">
-                            <div class="w-16 h-16 saffron-gradient rounded-lg flex items-center justify-center mb-6">
-                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                                </svg>
-                            </div>
-                            <h3 class="text-2xl font-semibold text-neutral-900 mb-4">Our Mission</h3>
-                            <p class="text-neutral-600">To create a vibrant community where knowledge flows freely, experts share insights, and learners find answers to their most pressing questions.</p>
-                        </div>
-
-                        <div class="bg-white p-8 rounded-xl shadow-lg border border-neutral-100">
-                            <div class="w-16 h-16 bg-teal-500 rounded-lg flex items-center justify-center mb-6">
-                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                                </svg>
-                            </div>
-                            <h3 class="text-2xl font-semibold text-neutral-900 mb-4">Community First</h3>
-                            <p class="text-neutral-600">Built by the community, for the community. Every feature is designed to foster meaningful connections and quality discussions.</p>
-                        </div>
-                    </div>
-
-                    <div class="bg-gradient-to-r from-saffron-500 to-saffron-600 rounded-xl p-8 text-white text-center">
-                        <h3 class="text-2xl font-semibold mb-4">Join Our Growing Community</h3>
-                        <p class="text-saffron-100 mb-6">Over 10,000 questions answered and 5,000+ active members worldwide</p>
-                        <button onclick="showModal('signupModal')" class="bg-white text-saffron-600 px-8 py-3 rounded-lg font-semibold hover:bg-saffron-50 transition-colors duration-200">
-                            Get Started Today
-                        </button>
-                    </div>
-                </div>
-            </main>
-        </section>
-    </div>
-
-    <!-- Modals -->
-    <!-- Login Modal -->
-    <div id="loginModal" class="modal">
-        <div class="modal-content">
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-2xl font-display font-bold text-neutral-900">Login</h2>
-                <button onclick="closeModal('loginModal')" class="text-neutral-400 hover:text-neutral-600">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                    </svg>
-                </button>
             </div>
-            <form class="space-y-4">
-                <div>
-                    <label class="block text-sm font-medium text-neutral-700 mb-2">Email</label>
-                    <input type="email" class="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-saffron-500 focus:border-saffron-500">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-neutral-700 mb-2">Password</label>
-                    <input type="password" class="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-saffron-500 focus:border-saffron-500">
-                </div>
-                <button type="submit" class="w-full saffron-gradient text-white py-2 rounded-lg font-semibold hover:opacity-90 transition-opacity">
-                    Login
-                </button>
-            </form>
-            <p class="text-center text-neutral-600 mt-4">
-                Don't have an account? 
-                <button onclick="closeModal('loginModal'); showModal('signupModal')" class="text-saffron-600 hover:text-saffron-700 font-medium">
-                    Sign up
-                </button>
-            </p>
         </div>
     </div>
-
-    <!-- Signup Modal -->
-    <div id="signupModal" class="modal">
-        <div class="modal-content">
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-2xl font-display font-bold text-neutral-900">Sign Up</h2>
-                <button onclick="closeModal('signupModal')" class="text-neutral-400 hover:text-neutral-600">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                    </svg>
-                </button>
-            </div>
-            <form class="space-y-4">
-                <div>
-                    <label class="block text-sm font-medium text-neutral-700 mb-2">Full Name</label>
-                    <input type="text" class="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-saffron-500 focus:border-saffron-500">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-neutral-700 mb-2">Email</label>
-                    <input type="email" class="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-saffron-500 focus:border-saffron-500">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-neutral-700 mb-2">Password</label>
-                    <input type="password" class="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-saffron-500 focus:border-saffron-500">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-neutral-700 mb-2">Confirm Password</label>
-                    <input type="password" class="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-saffron-500 focus:border-saffron-500">
-                </div>
-                <button type="submit" class="w-full saffron-gradient text-white py-2 rounded-lg font-semibold hover:opacity-90 transition-opacity">
-                    Sign Up
-                </button>
-            </form>
-            <p class="text-center text-neutral-600 mt-4">
-                Already have an account? 
-                <button onclick="closeModal('signupModal'); showModal('loginModal')" class="text-saffron-600 hover:text-saffron-700 font-medium">
-                    Login
-                </button>
-            </p>
-        </div>
-    </div>
-
-    <!-- Question Modal -->
-    <div id="questionModal" class="modal">
-        <div class="modal-content">
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-2xl font-display font-bold text-neutral-900">Ask a Question</h2>
-                <button onclick="closeModal('questionModal')" class="text-neutral-400 hover:text-neutral-600">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                    </svg>
-                </button>
-            </div>
-            <form class="space-y-4">
-                <div>
-                    <label class="block text-sm font-medium text-neutral-700 mb-2">Title</label>
-                    <input type="text" placeholder="What's your question?" class="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-saffron-500 focus:border-saffron-500">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-neutral-700 mb-2">Description</label>
-                    <textarea rows="4" placeholder="Provide more details about your question..." class="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-saffron-500 focus:border-saffron-500"></textarea>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-neutral-700 mb-2">Tags</label>
-                    <div class="flex flex-wrap gap-2 mb-2" id="selectedTags"></div>
-                    <div class="flex flex-wrap gap-2">
-                        <button type="button" onclick="toggleTag('javascript')" class="px-3 py-1 bg-neutral-100 text-neutral-700 rounded-full text-sm hover:bg-saffron-100 hover:text-saffron-700 transition-colors">JavaScript</button>
-                        <button type="button" onclick="toggleTag('python')" class="px-3 py-1 bg-neutral-100 text-neutral-700 rounded-full text-sm hover:bg-saffron-100 hover:text-saffron-700 transition-colors">Python</button>
-                        <button type="button" onclick="toggleTag('react')" class="px-3 py-1 bg-neutral-100 text-neutral-700 rounded-full text-sm hover:bg-saffron-100 hover:text-saffron-700 transition-colors">React</button>
-                        <button type="button" onclick="toggleTag('cricket')" class="px-3 py-1 bg-neutral-100 text-neutral-700 rounded-full text-sm hover:bg-saffron-100 hover:text-saffron-700 transition-colors">Cricket</button>
-                        <button type="button" onclick="toggleTag('business')" class="px-3 py-1 bg-neutral-100 text-neutral-700 rounded-full text-sm hover:bg-saffron-100 hover:text-saffron-700 transition-colors">Business</button>
-                        <button type="button" onclick="toggleTag('ai')" class="px-3 py-1 bg-neutral-100 text-neutral-700 rounded-full text-sm hover:bg-saffron-100 hover:text-saffron-700 transition-colors">AI</button>
-                    </div>
-                </div>
-                <button type="submit" class="w-full saffron-gradient text-white py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity">
-                    Post Question
-                </button>
-            </form>
-        </div>
-    </div>
+    
+    <!-- Footer -->
+    <footer class="bg-neutral-900 text-white mt-16"><div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12"><div class="grid grid-cols-1 md:grid-cols-4 gap-8"><div class="col-span-1 md:col-span-2"><div class="flex items-center mb-4"><div class="w-10 h-10 saffron-gradient rounded-lg flex items-center justify-center mr-3 floating"><svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div><h3 class="text-2xl font-display font-bold">Stack<span class="text-saffron-500">It</span></h3></div><p class="text-neutral-300 mb-4 max-w-md">Building a global community of learners and experts.</p></div><div><h4 class="text-lg font-semibold mb-4">Community</h4><ul class="space-y-2"><li><a href="#" onclick="showHome()" class="text-neutral-300 hover:text-saffron-500 transition-colors duration-200">Questions</a></li><li><a href="#" onclick="showCategories()" class="text-neutral-300 hover:text-saffron-500 transition-colors duration-200">Categories</a></li></ul></div><div><h4 class="text-lg font-semibold mb-4">Company</h4><ul class="space-y-2"><li><a href="#" onclick="showAbout()" class="text-neutral-300 hover:text-saffron-500 transition-colors duration-200">About</a></li><li><a href="#" class="text-neutral-300 hover:text-saffron-500 transition-colors duration-200">Careers</a></li></ul></div></div><div class="border-t border-neutral-700 mt-8 pt-8 text-center"><p class="text-neutral-400">© 2024 StackIt. All rights reserved.</p></div></div></footer>
 
     <script>
-        // Sample questions data
-        const questions = [
+        // --- GLOBAL STATE & APP LOGIC ---
+        let stackItCurrentUser = null;
+        let questions = [
             {
-                id: 1,
-                title: "How to implement authentication in a React application?",
-                description: "I'm building a React app and need to add user authentication. What's the best approach for handling login/logout and protecting routes?",
-                author: "Rajesh Kumar",
-                tags: ["react", "javascript", "authentication"],
-                votes: 15,
-                answers: 3,
-                views: 234,
-                time: "2 hours ago",
-                category: "technology"
-            },
-            {
-                id: 2,
-                title: "What are the key strategies for scaling a tech startup?",
-                description: "Looking for advice on scaling strategies for a B2B SaaS startup. What are the most important factors to consider?",
-                author: "Priya Sharma",
-                tags: ["startup", "business", "scaling"],
-                votes: 23,
-                answers: 7,
-                views: 456,
-                time: "4 hours ago",
-                category: "business"
-            },
-            {
-                id: 3,
-                title: "How does machine learning impact cricket analytics?",
-                description: "Interested in understanding how ML algorithms are being used to analyze cricket performance and predict match outcomes.",
-                author: "Arjun Patel",
-                tags: ["cricket", "machine-learning", "analytics"],
-                votes: 18,
-                answers: 5,
-                views: 321,
-                time: "6 hours ago",
-                category: "sports"
-            },
-            {
-                id: 4,
-                title: "Best practices for database optimization in Python?",
-                description: "Working with large datasets in Python. What are the most effective techniques for optimizing database queries and improving performance?",
-                author: "Sneha Reddy",
-                tags: ["python", "database", "optimization"],
-                votes: 31,
-                answers: 9,
-                views: 678,
-                time: "8 hours ago",
-                category: "technology"
-            },
-            {
-                id: 5,
-                title: "How to transition from employee to entrepreneur?",
-                description: "I've been working as a software engineer for 5 years and want to start my own company. What steps should I take to make this transition successfully?",
-                author: "Vikram Singh",
-                tags: ["entrepreneur", "career", "business"],
+                id: 'question-1',
+                title: 'How to join 2 columns in a data set to make a separate column in SQL',
+                content: '<p>I do not know the code for it as I am a beginner. As an example what I need to do is like there is a column 1 containing First name and column 2 consists of last name I want a column to combine both first name and last name.</p><p>Could someone please help me with this?</p>',
+                tags: ['sql', 'database'],
                 votes: 42,
-                answers: 12,
-                views: 892,
-                time: "1 day ago",
-                category: "business"
+                answers: 5,
+                views: 234,
+                author: 'Rahul Kapoor',
+                authorAvatar: 'https://randomuser.me/api/portraits/men/32.jpg',
+                date: '2 hours ago'
             },
             {
-                id: 6,
-                title: "Understanding quantum computing basics",
-                description: "Can someone explain quantum computing in simple terms? How does it differ from classical computing and what are its potential applications?",
-                author: "Meera Joshi",
-                tags: ["quantum", "computing", "physics"],
-                votes: 28,
-                answers: 6,
-                views: 445,
-                time: "1 day ago",
-                category: "science"
+                id: 'question-2',
+                title: 'Best practices for microservices architecture in 2024?',
+                content: '<p>I\'m designing a new system and considering microservices. What are the current best practices for implementing microservices architecture in 2024?</p>',
+                tags: ['architecture', 'microservices'],
+                votes: 98,
+                answers: 18,
+                views: 567,
+                author: 'Vikram Joshi',
+                authorAvatar: 'https://randomuser.me/api/portraits/men/45.jpg',
+                date: '1 day ago'
+            },
+            {
+                id: 'question-3',
+                title: 'How to optimize MongoDB queries for large datasets?',
+                content: '<p>Our MongoDB database has grown significantly and some queries are now taking too long. What are the best strategies for optimizing MongoDB queries when dealing with large datasets?</p>',
+                tags: ['mongodb', 'database', 'performance'],
+                votes: 76,
+                answers: 12,
+                views: 432,
+                author: 'Deepika Reddy',
+                authorAvatar: 'https://randomuser.me/api/portraits/women/45.jpg',
+                date: '3 days ago'
+            }
+        ];
+        let answers = [
+            {
+                questionId: 'question-1',
+                content: '<p>You can use the <code>CONCAT</code> function or the <code>||</code> operator to combine columns in SQL:</p><pre><code>SELECT CONCAT(first_name, \' \', last_name) AS full_name FROM your_table;</code></pre><p>Or alternatively:</p><pre><code>SELECT first_name || \' \' || last_name AS full_name FROM your_table;</code></pre>',
+                votes: 15,
+                isAccepted: true,
+                author: 'Priya Sharma',
+                authorAvatar: 'https://randomuser.me/api/portraits/women/45.jpg',
+                date: '1 hour ago'
             }
         ];
 
-        let currentQuestions = questions;
-        let selectedTags = [];
-        let currentPage = 0;
-        const questionsPerPage = 10;
-
-        // Initialize the application
-        document.addEventListener('DOMContentLoaded', function() {
-            loadQuestions();
-            setupSearch();
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeApplication();
         });
 
-        // Navigation functions
-        function showSection(sectionId) {
-            // Hide all sections
-            const sections = document.querySelectorAll('.page-section');
-            sections.forEach(section => section.classList.remove('active'));
+        function initializeApplication() {
+            // Initial UI setup
+            updateUIAfterAuthStateChange();
+            showPage('home-page');
+            renderQuestions();
+
+            // --- EVENT LISTENERS ---
+            document.getElementById('login-form').addEventListener('submit', handleLoginForm);
+            document.getElementById('signup-form').addEventListener('submit', handleSignupForm);
+            document.getElementById('ask-question-form').addEventListener('submit', handleAskQuestionForm);
+            document.getElementById('submit-answer-form').addEventListener('submit', handleSubmitAnswerForm);
             
-            // Show selected section
-            document.getElementById(sectionId).classList.add('active');
-            
-            // Update nav links
-            const navLinks = document.querySelectorAll('.nav-link');
-            navLinks.forEach(link => {
-                link.classList.remove('text-saffron-600', 'border-b-2', 'border-saffron-600');
-                link.classList.add('text-neutral-700');
+            // Category page listeners
+            const categoryCards = document.querySelectorAll('.category-card');
+            categoryCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    this.classList.toggle('category-selected');
+                    const check = this.querySelector('.category-check');
+                    check.classList.toggle('hidden');
+                });
+            });
+
+            // Tag input listeners
+            const tagInput = document.getElementById('tag-input');
+            const tagsList = document.getElementById('tags-list');
+            tagInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ',') {
+                    e.preventDefault();
+                    const tagText = this.value.trim().replace(/,/g, '');
+                    if (tagText && tagsList.children.length < 5) {
+                        addTag(tagText, tagsList);
+                        this.value = '';
+                    }
+                }
             });
         }
-
-        // Modal functions
-        function showModal(modalId) {
-            document.getElementById(modalId).classList.add('active');
-        }
-
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.remove('active');
-        }
-
-        // Close modal when clicking outside
-        document.addEventListener('click', function(e) {
-            if (e.target.classList.contains('modal')) {
-                e.target.classList.remove('active');
+        
+        // --- NAVIGATION ---
+        function showPage(pageId) {
+            document.querySelectorAll('.page-section').forEach(page => page.classList.add('hidden'));
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.classList.remove('hidden');
+                window.scrollTo(0, 0);
             }
-        });
-
-        // Question functions
-        function loadQuestions() {
-            const questionsList = document.getElementById('questionsList');
-            questionsList.innerHTML = '';
+        }
+        function showHome() { showPage('home-page'); }
+        function showLogin() { showPage('login-page'); }
+        function showSignup() { showPage('signup-page'); }
+        function showAbout() { showPage('about-page'); }
+        function showCategories() { showPage('categories-page'); }
+        function showDashboard() { if (stackItCurrentUser) showPage('dashboard-page'); else showLogin(); }
+        function showProfile() { if (stackItCurrentUser) showPage('profile-page'); else showLogin(); }
+        function showQuestionDetail(questionId) { 
+            if (!stackItCurrentUser) {
+                showLogin();
+                return;
+            }
             
-            currentQuestions.forEach(question => {
-                const questionCard = createQuestionCard(question);
-                questionsList.appendChild(questionCard);
-            });
+            const question = questions.find(q => q.id === questionId);
+            if (question) {
+                document.getElementById('question-vote-count').textContent = question.votes;
+                document.querySelector('#question-detail-page h1').textContent = question.title;
+                document.querySelector('#question-detail-page .prose').innerHTML = question.content;
+                
+                // Update tags
+                const tagsContainer = document.querySelector('#question-detail-page .flex.flex-wrap.gap-2');
+                tagsContainer.innerHTML = '';
+                question.tags.forEach(tag => {
+                    const tagElement = document.createElement('span');
+                    tagElement.className = 'px-3 py-1 bg-saffron-100 text-saffron-800 rounded-full text-sm font-medium transition-transform duration-200 hover:scale-105';
+                    tagElement.textContent = tag;
+                    tagsContainer.appendChild(tagElement);
+                });
+                
+                // Update author info
+                document.querySelector('#question-detail-page img').src = question.authorAvatar;
+                document.querySelector('#question-detail-page .text-neutral-900').textContent = question.author;
+                document.querySelector('#question-detail-page .text-neutral-500').textContent = `asked ${question.date}`;
+                
+                // Update answers
+                const questionAnswers = answers.filter(a => a.questionId === questionId);
+                const answersSection = document.getElementById('answers-section');
+                const answersTitle = document.getElementById('answers-title');
+                
+                answersTitle.textContent = `${questionAnswers.length} Answer${questionAnswers.length !== 1 ? 's' : ''}`;
+                
+                // Clear existing answers (except the template)
+                const answersContainer = answersSection.querySelector('.bg-white.rounded-xl.shadow-lg.border-2');
+                answersContainer.innerHTML = '';
+                
+                // Add each answer
+                questionAnswers.forEach(answer => {
+                    const answerElement = document.createElement('div');
+                    answerElement.className = 'p-6';
+                    answerElement.innerHTML = `
+                        <div class="flex items-start space-x-6">
+                            <div class="flex flex-col items-center space-y-3">
+                                <button class="p-2 hover:bg-saffron-50 rounded-full transition-colors duration-200 transform hover:scale-110">
+                                    <svg class="w-6 h-6 text-neutral-400 hover:text-saffron-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+                                    </svg>
+                                </button>
+                                <span class="text-lg font-bold text-neutral-700">${answer.votes}</span>
+                                <button class="p-2 hover:bg-saffron-50 rounded-full transition-colors duration-200 transform hover:scale-110">
+                                    <svg class="w-6 h-6 text-neutral-400 hover:text-saffron-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </button>
+                                ${answer.isAccepted ? '<div class="p-1 text-green-600" title="Accepted Answer"><svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div>' : ''}
+                            </div>
+                            <div class="flex-1">
+                                <div class="prose max-w-none text-neutral-700 mb-6">${answer.content}</div>
+                                <div class="flex items-center space-x-2 text-sm text-neutral-500">
+                                    <img class="w-8 h-8 rounded-full transition-transform duration-200 hover:scale-110" src="${answer.authorAvatar}" alt="${answer.author}">
+                                    <div>
+                                        <p class="text-sm font-medium text-neutral-900">${answer.author}</p>
+                                        <p class="text-xs text-neutral-500">answered ${answer.date}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    answersContainer.appendChild(answerElement);
+                });
+                
+                showPage('question-detail-page');
+            }
         }
 
-        function createQuestionCard(question) {
-            const card = document.createElement('div');
-            card.className = 'bg-white rounded-xl shadow-lg border border-neutral-100 p-6 hover:shadow-xl transition-shadow duration-300';
+        // --- MODAL ---
+        function showAskQuestion() {
+            if (!stackItCurrentUser) { showLogin(); return; }
+            const modal = document.getElementById('ask-question-modal');
+            if (modal) { modal.classList.remove('hidden'); document.body.style.overflow = 'hidden'; }
+        }
+        function closeAskQuestion() {
+            const modal = document.getElementById('ask-question-modal');
+            if (modal) { modal.classList.add('hidden'); document.body.style.overflow = 'auto'; }
+        }
+
+        // --- AUTHENTICATION ---
+        function handleLoginForm(e) {
+            e.preventDefault();
+            const email = e.target.email.value;
+            stackItCurrentUser = { id: 1, name: 'Rahul Kapoor', firstName: 'Rahul', email: email, avatar: 'https://randomuser.me/api/portraits/men/32.jpg' };
+            updateUIAfterAuthStateChange();
+            showDashboard();
+            e.target.reset();
+        }
+        function handleSignupForm(e) {
+            e.preventDefault();
+            const firstName = e.target['first-name'].value;
+            const lastName = e.target['last-name'].value;
+            const email = e.target.email.value;
+            if (e.target.password.value !== e.target['confirm-password'].value) { alert("Passwords don't match!"); return; }
+            stackItCurrentUser = { id: Date.now(), name: `${firstName} ${lastName}`, firstName: firstName, email: email, avatar: `https://randomuser.me/api/portraits/men/${Math.floor(Math.random()*50)}.jpg` };
+            updateUIAfterAuthStateChange();
+            showDashboard();
+            e.target.reset();
+        }
+        function logout() {
+            stackItCurrentUser = null;
+            updateUIAfterAuthStateChange();
+            showHome();
+        }
+        function updateUIAfterAuthStateChange() {
+            const authButtons = document.getElementById('auth-buttons');
+            const userProfile = document.getElementById('user-profile');
+            const dashboardLink = document.getElementById('dashboard-link');
+            const answerSection = document.getElementById('submit-answer-section');
+
+            if (stackItCurrentUser) {
+                authButtons.style.display = 'none';
+                userProfile.style.display = 'flex';
+                dashboardLink.style.display = 'block';
+                if (answerSection) answerSection.style.display = 'block';
+                document.getElementById('user-name-nav').textContent = stackItCurrentUser.name;
+                document.getElementById('user-avatar').src = stackItCurrentUser.avatar;
+                document.getElementById('dashboard-user-name').textContent = stackItCurrentUser.firstName;
+                document.querySelector('#profile-header-info h2').textContent = stackItCurrentUser.name;
+                document.querySelector('#profile-header-info p').textContent = `@${stackItCurrentUser.name.replace(/\s+/g, '_').toLowerCase()}`;
+                document.querySelector('#profile-page img').src = stackItCurrentUser.avatar;
+            } else {
+                authButtons.style.display = 'flex';
+                userProfile.style.display = 'none';
+                dashboardLink.style.display = 'none';
+                if (answerSection) answerSection.style.display = 'none';
+            }
+        }
+
+        // --- FORM HANDLING ---
+        function handleAskQuestionForm(e) {
+            e.preventDefault();
+            const title = document.getElementById('question-title').value;
+            const content = document.getElementById('question-body-editor').innerHTML;
+            const tags = Array.from(document.querySelectorAll('#tags-list .tag-item')).map(tag => tag.textContent.replace('×', '').trim());
             
-            card.innerHTML = `
-                <div class="flex items-start justify-between mb-4">
-                    <div class="flex-1">
-                        <h3 class="text-xl font-semibold text-neutral-900 mb-2 hover:text-saffron-600 cursor-pointer">
-                            ${question.title}
-                        </h3>
-                        <p class="text-neutral-600 mb-3">${question.description}</p>
-                        <div class="flex flex-wrap gap-2 mb-3">
-                            ${question.tags.map(tag => `
-                                <span class="px-3 py-1 bg-saffron-100 text-saffron-700 rounded-full text-sm font-medium">
-                                    ${tag}
-                                </span>
-                            `).join('')}
+            if (!title || !content || tags.length === 0) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            const newQuestion = {
+                id: `question-${Date.now()}`,
+                title: title,
+                content: content,
+                tags: tags,
+                votes: 0,
+                answers: 0,
+                views: 0,
+                author: stackItCurrentUser.name,
+                authorAvatar: stackItCurrentUser.avatar,
+                date: 'just now'
+            };
+
+            questions.unshift(newQuestion);
+            renderQuestions();
+            
+            alert('Question posted successfully!');
+            closeAskQuestion();
+            e.target.reset();
+            document.getElementById('question-body-editor').innerHTML = '';
+            document.getElementById('tags-list').innerHTML = '';
+        }
+        
+        function handleSubmitAnswerForm(e) {
+            e.preventDefault();
+            if (!stackItCurrentUser) {
+                showLogin();
+                return;
+            }
+
+            const editor = document.getElementById('answer-editor');
+            const answerContent = editor.innerHTML;
+            if (!answerContent.trim()) { alert('Please write an answer.'); return; }
+
+            // Create a new answer
+            const newAnswer = {
+                questionId: document.querySelector('#question-detail-page h1').getAttribute('data-id') || 'question-1',
+                content: answerContent,
+                votes: 0,
+                isAccepted: false,
+                author: stackItCurrentUser.name,
+                authorAvatar: stackItCurrentUser.avatar,
+                date: 'just now'
+            };
+
+            answers.push(newAnswer);
+            
+            // Update the question's answer count
+            const questionId = newAnswer.questionId;
+            const question = questions.find(q => q.id === questionId);
+            if (question) {
+                question.answers++;
+            }
+
+            // Create a new answer element
+            const newAnswerElement = document.createElement('div');
+            newAnswerElement.className = 'bg-white rounded-xl shadow-lg border border-neutral-100 mb-6';
+            newAnswerElement.innerHTML = `
+                <div class="p-6">
+                    <div class="flex items-start space-x-6">
+                        <div class="flex flex-col items-center space-y-3">
+                            <button class="p-2 hover:bg-saffron-50 rounded-full transition-colors duration-200 transform hover:scale-110">
+                                <svg class="w-6 h-6 text-neutral-400 hover:text-saffron-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+                                </svg>
+                            </button>
+                            <span class="text-lg font-bold text-neutral-700">0</span>
+                            <button class="p-2 hover:bg-saffron-50 rounded-full transition-colors duration-200 transform hover:scale-110">
+                                <svg class="w-6 h-6 text-neutral-400 hover:text-saffron-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
                         </div>
-                        <div class="flex items-center text-sm text-neutral-500">
-                            <span class="mr-4">Asked by <strong class="text-neutral-700">${question.author}</strong></span>
-                            <span>${question.time}</span>
+                        <div class="flex-1">
+                            <div class="prose max-w-none text-neutral-700 mb-6">${answerContent}</div>
+                            <div class="flex items-center space-x-2 text-sm text-neutral-500">
+                                <img class="w-8 h-8 rounded-full transition-transform duration-200 hover:scale-110" src="${stackItCurrentUser.avatar}" alt="${stackItCurrentUser.name}">
+                                <div>
+                                    <p class="text-sm font-medium text-neutral-900">${stackItCurrentUser.name}</p>
+                                    <p class="text-xs text-neutral-500">answered just now</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="flex flex-col items-end space-y-2 ml-6">
-                        <div class="flex items-center space-x-4 text-sm text-neutral-500">
-                            <div class="flex items-center space-x-1">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11l5-5m0 0l5 5m-5-5v12"></path>
-                                </svg>
-                                <span class="font-medium">${question.votes}</span>
-                            </div>
-                            <div class="flex items-center space-x-1">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
-                                </svg>
-                                <span>${question.answers}</span>
-                            </div>
-                            <div class="flex items-center space-x-1">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                                </svg>
-                                <span>${question.views}</span>
+                </div>`;
+            
+            // Append the new answer and update the count
+            const answersSection = document.getElementById('answers-section');
+            answersSection.insertBefore(newAnswerElement, document.getElementById('submit-answer-section'));
+            
+            const answersTitle = document.getElementById('answers-title');
+            const currentCount = parseInt(answersTitle.textContent) || 0;
+            answersTitle.textContent = `${currentCount + 1} Answer${currentCount + 1 > 1 ? 's' : ''}`;
+
+            // Clear editor
+            editor.innerHTML = '';
+        }
+
+        // --- QUESTION RENDERING ---
+        function renderQuestions() {
+            const container = document.getElementById('questions-container');
+            container.innerHTML = '';
+            
+            questions.forEach(question => {
+                const questionElement = document.createElement('div');
+                questionElement.className = 'bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-neutral-100 question-card';
+                questionElement.innerHTML = `
+                    <div class="p-6">
+                        <div class="flex items-start justify-between">
+                            <div class="flex space-x-4 w-full">
+                                <div class="flex flex-col items-center space-y-1 text-center w-12">
+                                    <span class="text-lg font-semibold text-neutral-700 vote-count">${question.votes}</span>
+                                    <span class="text-xs text-neutral-500">votes</span>
+                                    <span class="mt-2 bg-green-100 text-green-800 px-2 py-1 rounded text-xs">${question.answers} ans</span>
+                                    <span class="mt-1 text-xs text-neutral-500">${question.views} views</span>
+                                </div>
+                                <div class="flex-1">
+                                    <h4 onclick="showQuestionDetail('${question.id}')" class="text-xl font-semibold text-neutral-900 mb-2 hover:text-saffron-600 cursor-pointer transition-colors duration-200">${question.title}</h4>
+                                    <p class="text-neutral-600 mb-4 text-sm">${question.content.substring(0, 150)}${question.content.length > 150 ? '...' : ''}</p>
+                                    <div class="flex flex-wrap gap-2 mb-4">
+                                        ${question.tags.map(tag => `<span class="px-3 py-1 bg-saffron-100 text-saffron-800 rounded-full text-sm font-medium transition-transform duration-200 hover:scale-105">${tag}</span>`).join('')}
+                                    </div>
+                                    <div class="flex items-center justify-end mt-4 pt-4 border-t border-neutral-100">
+                                        <div class="flex items-center space-x-2">
+                                            <img class="w-8 h-8 rounded-full transition-transform duration-200 hover:scale-110" src="${question.authorAvatar}" alt="${question.author}">
+                                            <div>
+                                                <p class="text-sm font-medium text-neutral-900">${question.author}</p>
+                                                <p class="text-xs text-neutral-500">asked ${question.date}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            `;
-            
-            return card;
+                `;
+                container.appendChild(questionElement);
+            });
         }
 
         function loadMoreQuestions() {
+            if (!stackItCurrentUser) {
+                showLogin();
+                return;
+            }
+
             // Simulate loading more questions
             const newQuestions = [
                 {
-                    id: 7,
-                    title: "How to optimize React component performance?",
-                    description: "Looking for best practices to optimize React components for better performance in large applications.",
-                    author: "Amit Gupta",
-                    tags: ["react", "performance", "optimization"],
-                    votes: 12,
-                    answers: 4,
-                    views: 189,
-                    time: "2 days ago",
-                    category: "technology"
+                    id: `question-${Date.now()}`,
+                    title: 'How to implement JWT authentication in Node.js?',
+                    content: '<p>I\'m building a Node.js API and want to implement JWT authentication. What are the best practices for implementing secure JWT authentication in Node.js?</p>',
+                    tags: ['nodejs', 'authentication', 'jwt'],
+                    votes: 24,
+                    answers: 5,
+                    views: 156,
+                    author: 'Neha Gupta',
+                    authorAvatar: 'https://randomuser.me/api/portraits/women/32.jpg',
+                    date: '4 hours ago'
                 },
                 {
-                    id: 8,
-                    title: "What makes a successful product manager?",
-                    description: "Interested in understanding the key skills and qualities that make someone excel in product management.",
-                    author: "Kavya Nair",
-                    tags: ["product-management", "career", "skills"],
-                    votes: 19,
+                    id: `question-${Date.now() + 1}`,
+                    title: 'Best way to handle state in large React applications?',
+                    content: '<p>Our React application has grown significantly and state management is becoming complex. What is the recommended approach for state management in large React applications in 2024?</p>',
+                    tags: ['react', 'state-management'],
+                    votes: 36,
                     answers: 8,
-                    views: 367,
-                    time: "2 days ago",
-                    category: "business"
+                    views: 289,
+                    author: 'Amit Singh',
+                    authorAvatar: 'https://randomuser.me/api/portraits/men/45.jpg',
+                    date: '1 day ago'
                 }
             ];
-            
-            currentQuestions = [...currentQuestions, ...newQuestions];
-            loadQuestions();
+
+            questions = [...questions, ...newQuestions];
+            renderQuestions();
         }
 
-        // Tag functions
-        function toggleTag(tag) {
-            const index = selectedTags.indexOf(tag);
-            if (index > -1) {
-                selectedTags.splice(index, 1);
-            } else {
-                selectedTags.push(tag);
-            }
-            
-            updateTagDisplay();
-        }
-
-        function updateTagDisplay() {
-            const selectedTagsContainer = document.getElementById('selectedTags');
-            selectedTagsContainer.innerHTML = '';
-            
-            selectedTags.forEach(tag => {
-                const tagElement = document.createElement('span');
-                tagElement.className = 'px-3 py-1 bg-saffron-500 text-white rounded-full text-sm font-medium flex items-center space-x-2';
-                tagElement.innerHTML = `
-                    <span>${tag}</span>
-                    <button onclick="toggleTag('${tag}')" class="text-white hover:text-saffron-200">
-                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                        </svg>
-                    </button>
-                `;
-                selectedTagsContainer.appendChild(tagElement);
-            });
-            
-            // Update tag buttons
-            const tagButtons = document.querySelectorAll('#questionModal button[onclick^="toggleTag"]');
-            tagButtons.forEach(button => {
-                const tag = button.getAttribute('onclick').match(/'([^']+)'/)[1];
-                if (selectedTags.includes(tag)) {
-                    button.classList.add('tag-selected');
-                } else {
-                    button.classList.remove('tag-selected');
-                }
+        // --- HELPERS ---
+        function addTag(text, listElement) {
+            const tagItem = document.createElement('li');
+            tagItem.className = 'tag-item';
+            tagItem.innerHTML = `${text}<span class="tag-close">×</span>`;
+            listElement.appendChild(tagItem);
+            tagItem.querySelector('.tag-close').addEventListener('click', () => {
+                tagItem.remove();
             });
         }
-
-        // Search function
-        function setupSearch() {
-            const searchInput = document.getElementById('searchInput');
-            searchInput.addEventListener('input', function(e) {
-                const searchTerm = e.target.value.toLowerCase();
-                
-                if (searchTerm === '') {
-                    currentQuestions = questions;
-                } else {
-                    currentQuestions = questions.filter(question => 
-                        question.title.toLowerCase().includes(searchTerm) ||
-                        question.description.toLowerCase().includes(searchTerm) ||
-                        question.tags.some(tag => tag.toLowerCase().includes(searchTerm))
-                    );
-                }
-                
-                loadQuestions();
-            });
-        }
-
-        // Category filter
-        function filterByCategory(category) {
-            currentQuestions = questions.filter(question => question.category === category);
-            loadQuestions();
-            showSection('home');
-        }
-
-        // Form submissions
-        document.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            if (e.target.closest('#loginModal')) {
-                handleLogin();
-            } else if (e.target.closest('#signupModal')) {
-                handleSignup();
-            } else if (e.target.closest('#questionModal')) {
-                handleQuestionSubmit();
+        
+        function insertCode() {
+            const code = prompt('Enter your code:');
+            if (code) {
+                document.execCommand('insertHTML', false, `<pre><code>${code}</code></pre>`);
             }
-        });
-
-        function handleLogin() {
-            // Simulate login
-            alert('Login functionality would be implemented here');
-            closeModal('loginModal');
         }
-
-        function handleSignup() {
-            // Simulate signup
-            alert('Signup functionality would be implemented here');
-            closeModal('signupModal');
-        }
-
-        function handleQuestionSubmit() {
-            // Simulate question submission
-            alert('Question submitted successfully!');
-            closeModal('questionModal');
-            // Reset form
-            selectedTags = [];
-            updateTagDisplay();
-        }
-
-        // Add some interactive effects
-        document.addEventListener('mouseover', function(e) {
-            if (e.target.closest('.category-card')) {
-                e.target.closest('.category-card').style.transform = 'translateY(-4px)';
+        
+        function insertImage() {
+            const imageUrl = prompt('Enter the image URL:');
+            if (imageUrl) {
+                document.execCommand('insertHTML', false, `<img src="${imageUrl}" alt="Image" class="max-w-full h-auto rounded-lg">`);
             }
-        });
-
-        document.addEventListener('mouseout', function(e) {
-            if (e.target.closest('.category-card')) {
-                e.target.closest('.category-card').style.transform = 'translateY(0)';
+        }
+        
+        function formatAnswerText(command) { 
+            document.execCommand(command, false, null); 
+        }
+        
+        function insertAnswerCode() { 
+            const code = prompt('Enter code:'); 
+            if (code) document.execCommand('insertHTML', false, `<pre><code>${code}</code></pre>`); 
+        }
+        
+        function vote(elementId, value) {
+            if (!stackItCurrentUser) {
+                showLogin();
+                return;
             }
-        });
+
+            const countElement = document.getElementById(elementId === 'question-detail-up' || elementId === 'question-detail-down' ? 'question-vote-count' : 'vote-count');
+            if (countElement) {
+                let currentCount = parseInt(countElement.textContent) || 0;
+                currentCount += value;
+                countElement.textContent = currentCount;
+            }
+        }
     </script>
 </body>
 </html>
