@@ -13,10 +13,10 @@ https://drive.google.com/drive/folders/1tyS7vlONuHyJbRIgjxNM1w2k5sXjSyEl
 Team Syntax:-
 
 Team member:-
-Krish Kaneria(leader)
-Manthan Chavda
-Krushil Patel
-Het Patel
+Krish Kaneria(leader) , 
+Manthan Chavda , 
+Krushil Patel , 
+Het Patel , 
 
 24dit028@charusat.edu.in  
 (leader email id)
