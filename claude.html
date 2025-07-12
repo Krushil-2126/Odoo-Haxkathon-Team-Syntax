@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StackIt - Knowledge Sharing Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'saffron': {
+                            50: '#fff7ed',
+                            100: '#ffedd5',
+                            200: '#fed7aa',
+                            300: '#fdba74',
+                            400: '#fb923c',
+                            500: '#f97316',
+                            600: '#ea580c',
+                            700: '#c2410c',
+                            800: '#9a3412',
+                            900: '#7c2d12',
+                            950: '#431407'
+                        },
+                        'teal': {
+                            50: '#f0fdfa',
+                            100: '#ccfbf1',
+                            200: '#99f6e4',
+                            300: '#5eead4',
+                            400: '#2dd4bf',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                            700: '#0f766e',
+                            800: '#115e59',
+                            900: '#134e4a',
+                            950: '#042f2e'
+                        },
+                        'royal': {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            200: '#bfdbfe',
+                            300: '#93c5fd',
+                            400: '#60a5fa',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                            950: '#172554'
+                        },
+                        'neutral': {
+                            50: '#fafafa',
+                            100: '#f5f5f5',
+                            200: '#e5e5e5',
+                            300: '#d4d4d4',
+                            400: '#a3a3a3',
+                            500: '#737373',
+                            600: '#525252',
+                            700: '#404040',
+                            800: '#262626',
+                            900: '#171717',
+                            950: '#0a0a0a'
+                        }
+                    },
+                    fontFamily: {
+                        'display': ['Playfair Display', 'serif'],
+                        'body': ['Inter', 'sans-serif']
+                    },
+                    animation: {
+                        'shimmer': 'shimmer 2s linear infinite',
+                        'fadeIn': 'fadeIn 0.5s ease-in-out',
+                        'slideIn': 'slideIn 0.3s ease-out'
+                    },
+                    keyframes: {
+                        shimmer: {
+                            '0%': { backgroundPosition: '-200px 0' },
+                            '100%': { backgroundPosition: 'calc(200px + 100%) 0' }
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        slideIn: {
+                            '0%': { transform: 'translateY(-20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .shimmer {
+            background: linear-gradient(90deg, #f97316 0%, #fb923c 50%, #f97316 100%);
+            background-size: 200px 100%;
+            animation: shimmer 2s linear infinite;
+        }
+        
+        .saffron-gradient {
+            background: linear-gradient(135deg, #f97316 0%, #fb923c 100%);
+        }
+        
+        .saffron-gradient-hover:hover {
+            background: linear-gradient(135deg, #ea580c 0%, #f97316 100%);
+        }
+        
+        .text-shadow {
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .page-section {
+            display: none;
+        }
+
+        .page-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .tag-selected {
+            background: #f97316 !important;
+            color: white !important;
+        }
+
+        .category-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-saffron-50 to-neutral-50 font-body">
+    <!-- Header -->
+    <header class="bg-white shadow-lg border-b-2 border-saffron-500 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center cursor-pointer" onclick="showSection('home')">
+                        <div class="w-10 h-10 saffron-gradient rounded-lg flex items-center justify-center mr-3">
+                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <h1 class="text-2xl font-display font-bold text-neutral-900">
+                            Stack<span class="text-saffron-600">It</span>
+                        </h1>
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#" onclick="showSection('home')" class="nav-link text-neutral-700 hover:text-saffron-600 px-3 py-2 text-sm font-medium transition-colors duration-200">Questions</a>
+                    <a href="#" onclick="showSection('dashboard')" class="nav-link text-neutral-700 hover:text-saffron-600 px-3 py-2 text-sm font-medium transition-colors duration-200">Dashboard</a>
+                    <a href="#" onclick="showSection('categories')" class="nav-link text-neutral-700 hover:text-saffron-600 px-3 py-2 text-sm font-medium transition-colors duration-200">Categories</a>
+                    <a href="#" onclick="showSection('about')" class="nav-link text-neutral-700 hover:text-saffron-600 px-3 py-2 text-sm font-medium transition-colors duration-200">About</a>
+                </nav>
+
+                <!-- Search Bar -->
+                <div class="flex-1 max-w-lg mx-8">
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <svg class="h-5 w-5 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                        </div>
+                        <input type="text" id="searchInput" placeholder="Search questions..." class="w-full pl-10 pr-4 py-2 border border-neutral-200 rounded-lg focus:ring-2 focus:ring-saffron-500 focus:border-saffron-500 bg-white text-neutral-900 placeholder-neutral-500">
+                    </div>
+                </div>
+
+                <!-- Auth Buttons -->
+                <div class="flex items-center space-x-4">
+                    <button onclick="showModal('loginModal')" class="px-4 py-2 text-neutral-700 hover:text-saffron-600 font-medium transition-colors duration-200">
+                        Login
+                    </button>
+                    <button onclick="showModal('signupModal')" class="px-6 py-2 saffron-gradient saffron-gradient-hover text-white font-medium rounded-lg transition-all duration-200 transform hover:scale-105 shadow-lg">
+                        Sign Up
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <div id="mainContent">
+        <!-- Home Section -->
+        <section id="home" class="page-section active">
+            <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                <!-- Hero Section -->
+                <div class="text-center mb-12">
+                    <h2 class="text-4xl md:text-5xl font-display font-bold text-neutral-900 mb-4 text-shadow">
+                        Share Knowledge, Get <span class="text-saffron-600">Answers</span>
+                    </h2>
+                    <p class="text-xl text-neutral-600 mb-8 max-w-2xl mx-auto">
+                        Join our global community of experts and learners. Ask questions, share insights, and grow together.
+                    </p>
+                    <button onclick="showModal('questionModal')" class="saffron-gradient saffron-gradient-hover text-white font-semibold px-8 py-4 rounded-lg text-lg transition-all duration-200 transform hover:scale-105 shadow-xl shimmer">
+                        Ask a Question
+                    </button>
+                </div>
+
+                <!-- Question Cards -->
+                <div class="space-y-6">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-2xl font-display font-semibold text-neutral-900">Latest Questions</h3>
+                        <div class="flex space-x-2">
+                            <button class="px-4 py-2 bg-saffron-100 text-saffron-700 rounded-lg hover:bg-saffron-200 transition-colors duration-200 font-medium">
+                                Newest
+                            </button>
+                            <button class="px-4 py-2 text-neutral-600 hover:bg-neutral-100 rounded-lg transition-colors duration-200">
+                                Active
+                            </button>
+                            <button class="px-4 py-2 text-neutral-600 hover:bg-neutral-100 rounded-lg transition-colors duration-200">
+                                Votes
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="questionsList">
+                        <!-- Questions will be populated here -->
+                    </div>
+
+                    <!-- Load More Button -->
+                    <div class="text-center mt-8">
+                        <button onclick="loadMoreQuestions()" class="px-8 py-3 bg-white border-2 border-saffron-500 text-saffron-700 font-semibold rounded-lg hover:bg-saffron-50 transition-all duration-200 transform hover:scale-105">
+                            Load More Questions
+                        </button>
+                    </div>
+                </div>
+            </main>
+        </section>
+
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="page-section">
+            <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                <div class="mb-8">
+                    <h2 class="text-3xl font-display font-bold text-neutral-900 mb-2">Dashboard</h2>
+                    <p class="text-neutral-600">Your activity and statistics</p>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-white p-6 rounded-xl shadow-lg border border-neutral-100">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-neutral-600">Questions Asked</p>
+                                <p class="text-2xl font-bold text-saffron-600">15</p>
+                            </div>
+                            <div class="w-12 h-12 bg-saffron-100 rounded-lg flex items-center justify-center">
+                                <svg class="w-6 h-6 text-saffron-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-lg border border-neutral-100">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-neutral-600">Answers Given</p>
+                                <p class="text-2xl font-bold text-teal-600">42</p>
+                            </div>
+                            <div class="w-12 h-12 bg-teal-100 rounded-lg flex items-center justify-center">
+                                <svg class="w-6 h-6 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-lg border border-neutral-100">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-neutral-600">Reputation</p>
+                                <p class="text-2xl font-bold text-royal-600">1,250</p>
+                            </div>
+                            <div class="w-12 h-12 bg-royal-100 rounded-lg flex items-center justify-center">
+                                <svg class="w-6 h-6 text-royal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-lg border border-neutral-100">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-neutral-600">Badges</p>
+                                <p class="text-2xl font-bold text-neutral-700">8</p>
+                            </div>
+                            <div class="w-12 h-12 bg-neutral-100 rounded-lg flex items-center justify-center">
+                                <svg class="w-6 h-6 text-neutral-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="bg-white rounded-xl shadow-lg border border-neutral-100 p-6">
+                    <h3 class="text-xl font-semibold text-neutral-900 mb-4">Recent Activity</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center space-x-3 pb-3 border-b border-neutral-100">
+                            <div class="w-8 h-8 bg-saffron-100 rounded-full flex items-center justify-center">
+                                <svg class="w-4 h-4 text-saffron-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="text-sm text-neutral-900">You asked a question about AI trends</p>
+                                <p class="text-xs text-neutral-500">2 hours ago</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-3 pb-3 border-b border-neutral-100">
+                            <div class="w-8 h-8 bg-teal-100 rounded-full flex items-center justify-center">
+                                <svg class="w-4 h-4 text-teal-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="text-sm text-neutral-900">You answered a question about cricket analytics</p>
+                                <p class="text-xs text-neutral-500">1 day ago</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <div class="w-8 h-8 bg-royal-100 rounded-full flex items-center justify-center">
+                                <svg class="w-4 h-4 text-royal-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="text-sm text-neutral-900">You earned the "Helpful" badge</p>
+                                <p class="text-xs text-neutral-500">2 days ago</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </section>
+
+        <!-- Categories Section -->
+        <section id="categories" class="page-section">
+            <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                <div class="mb-8">
+                    <h2 class="text-3xl font-display font-bold text-neutral-900 mb-2">Categories</h2>
+                    <p class="text-neutral-600">Browse questions by category</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="category-card bg-white p-6 rounded-xl shadow-lg border border-neutral-100 cursor-pointer transition-all duration-300" onclick="filterByCategory('technology')">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-saffron-100 rounded-lg flex items-center justify-center mr-4">
+                                <svg class="w-6 h-6 text-saffron-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-neutral-900">Technology</h3>
+                                <p class="text-sm text-neutral-600">145 questions</p>
+                            </div>
+                        </div>
+                        <p class="text-neutral-600 text-sm">Programming, AI, web development, and more</p>
+                    </div>
+
+                    <div class="category-card bg-white p-6 rounded-xl shadow-lg border border-neutral-100 cursor-pointer transition-all duration-300" onclick="filterByCategory('business')">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-teal-100 rounded-lg flex items-center justify-center mr-4">
+                                <svg class="w-6 h-6 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0H8m8 0v2a2 2 0 01-2 2H10a2 2 0 01-2-2V6m8 0H8"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-neutral-900">Business</h3>
+                                <p class="text-sm text-neutral-600">92 questions</p>
+                            </div>
+                        </div>
+                        <p class="text-neutral-600 text-sm">Startups, entrepreneurship, finance, and strategy</p>
+                    </div>
+
+                    <div class="category-card bg-white p-6 rounded-xl shadow-lg border border-neutral-100 cursor-pointer transition-all duration-300" onclick="filterByCategory('science')">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-royal-100 rounded-lg flex items-center justify-center mr-4">
+                                <svg class="w-6 h-6 text-royal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-neutral-900">Science</h3>
+                                <p class="text-sm text-neutral-600">67 questions</p>
+                            </div>
+                        </div>
+                        <p class="text-neutral-600 text-sm">Physics, chemistry, biology, and research</p>
+                    </div>
+
+                    <div class="category-card bg-white p-6 rounded-xl shadow-lg border border-neutral-100 cursor-pointer transition-all duration-300" onclick="filterByCategory('education')">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center mr-4">
+                                <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-neutral-900">Education</h3>
+                                <p class="text-sm text-neutral-600">134 questions</p>
+                            </div>
+                        </div>
+                        <p class="text-neutral-600 text-sm">Learning, career advice, and academic guidance</p>
+                    </div>
+
+                    <div class="category-card bg-white p-6 rounded-xl shadow-lg border border-neutral-100 cursor-pointer transition-all duration-300" onclick="filterByCategory('sports')">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mr-4">
+                                <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-neutral-900">Sports<p class="text-sm text-neutral-600">78 questions</p>
+                            </div>
+                        </div>
+                        <p class="text-neutral-600 text-sm">Cricket, football, analytics, and sports science</p>
+                    </div>
+
+                    <div class="category-card bg-white p-6 rounded-xl shadow-lg border border-neutral-100 cursor-pointer transition-all duration-300" onclick="filterByCategory('lifestyle')">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mr-4">
+                                <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-neutral-900">Lifestyle</h3>
+                                <p class="text-sm text-neutral-600">89 questions</p>
+                            </div>
+                        </div>
+                        <p class="text-neutral-600 text-sm">Health, wellness, travel, and personal development</p>
+                    </div>
+                </div>
+            </main>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="page-section">
+            <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                <div class="max-w-4xl mx-auto">
+                    <div class="text-center mb-12">
+                        <h2 class="text-4xl font-display font-bold text-neutral-900 mb-4">About StackIt</h2>
+                        <p class="text-xl text-neutral-600">Empowering knowledge sharing in the digital age</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                        <div class="bg-white p-8 rounded-xl shadow-lg border border-neutral-100">
+                            <div class="w-16 h-16 saffron-gradient rounded-lg flex items-center justify-center mb-6">
+                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-2xl font-semibold text-neutral-900 mb-4">Our Mission</h3>
+                            <p class="text-neutral-600">To create a vibrant community where knowledge flows freely, experts share insights, and learners find answers to their most pressing questions.</p>
+                        </div>
+
+                        <div class="bg-white p-8 rounded-xl shadow-lg border border-neutral-100">
+                            <div class="w-16 h-16 bg-teal-500 rounded-lg flex items-center justify-center mb-6">
+                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-2xl font-semibold text-neutral-900 mb-4">Community First</h3>
+                            <p class="text-neutral-600">Built by the community, for the community. Every feature is designed to foster meaningful connections and quality discussions.</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-r from-saffron-500 to-saffron-600 rounded-xl p-8 text-white text-center">
+                        <h3 class="text-2xl font-semibold mb-4">Join Our Growing Community</h3>
+                        <p class="text-saffron-100 mb-6">Over 10,000 questions answered and 5,000+ active members worldwide</p>
+                        <button onclick="showModal('signupModal')" class="bg-white text-saffron-600 px-8 py-3 rounded-lg font-semibold hover:bg-saffron-50 transition-colors duration-200">
+                            Get Started Today
+                        </button>
+                    </div>
+                </div>
+            </main>
+        </section>
+    </div>
+
+    <!-- Modals -->
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-display font-bold text-neutral-900">Login</h2>
+                <button onclick="closeModal('loginModal')" class="text-neutral-400 hover:text-neutral-600">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            <form class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-neutral-700 mb-2">Email</label>
+                    <input type="email" class="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-saffron-500 focus:border-saffron-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-neutral-700 mb-2">Password</label>
+                    <input type="password" class="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-saffron-500 focus:border-saffron-500">
+                </div>
+                <button type="submit" class="w-full saffron-gradient text-white py-2 rounded-lg font-semibold hover:opacity-90 transition-opacity">
+                    Login
+                </button>
+            </form>
+            <p class="text-center text-neutral-600 mt-4">
+                Don't have an account? 
+                <button onclick="closeModal('loginModal'); showModal('signupModal')" class="text-saffron-600 hover:text-saffron-700 font-medium">
+                    Sign up
+                </button>
+            </p>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div id="signupModal" class="modal">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-display font-bold text-neutral-900">Sign Up</h2>
+                <button onclick="closeModal('signupModal')" class="text-neutral-400 hover:text-neutral-600">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            <form class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-neutral-700 mb-2">Full Name</label>
+                    <input type="text" class="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-saffron-500 focus:border-saffron-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-neutral-700 mb-2">Email</label>
+                    <input type="email" class="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-saffron-500 focus:border-saffron-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-neutral-700 mb-2">Password</label>
+                    <input type="password" class="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-saffron-500 focus:border-saffron-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-neutral-700 mb-2">Confirm Password</label>
+                    <input type="password" class="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-saffron-500 focus:border-saffron-500">
+                </div>
+                <button type="submit" class="w-full saffron-gradient text-white py-2 rounded-lg font-semibold hover:opacity-90 transition-opacity">
+                    Sign Up
+                </button>
+            </form>
+            <p class="text-center text-neutral-600 mt-4">
+                Already have an account? 
+                <button onclick="closeModal('signupModal'); showModal('loginModal')" class="text-saffron-600 hover:text-saffron-700 font-medium">
+                    Login
+                </button>
+            </p>
+        </div>
+    </div>
+
+    <!-- Question Modal -->
+    <div id="questionModal" class="modal">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-display font-bold text-neutral-900">Ask a Question</h2>
+                <button onclick="closeModal('questionModal')" class="text-neutral-400 hover:text-neutral-600">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            <form class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-neutral-700 mb-2">Title</label>
+                    <input type="text" placeholder="What's your question?" class="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-saffron-500 focus:border-saffron-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-neutral-700 mb-2">Description</label>
+                    <textarea rows="4" placeholder="Provide more details about your question..." class="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-saffron-500 focus:border-saffron-500"></textarea>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-neutral-700 mb-2">Tags</label>
+                    <div class="flex flex-wrap gap-2 mb-2" id="selectedTags"></div>
+                    <div class="flex flex-wrap gap-2">
+                        <button type="button" onclick="toggleTag('javascript')" class="px-3 py-1 bg-neutral-100 text-neutral-700 rounded-full text-sm hover:bg-saffron-100 hover:text-saffron-700 transition-colors">JavaScript</button>
+                        <button type="button" onclick="toggleTag('python')" class="px-3 py-1 bg-neutral-100 text-neutral-700 rounded-full text-sm hover:bg-saffron-100 hover:text-saffron-700 transition-colors">Python</button>
+                        <button type="button" onclick="toggleTag('react')" class="px-3 py-1 bg-neutral-100 text-neutral-700 rounded-full text-sm hover:bg-saffron-100 hover:text-saffron-700 transition-colors">React</button>
+                        <button type="button" onclick="toggleTag('cricket')" class="px-3 py-1 bg-neutral-100 text-neutral-700 rounded-full text-sm hover:bg-saffron-100 hover:text-saffron-700 transition-colors">Cricket</button>
+                        <button type="button" onclick="toggleTag('business')" class="px-3 py-1 bg-neutral-100 text-neutral-700 rounded-full text-sm hover:bg-saffron-100 hover:text-saffron-700 transition-colors">Business</button>
+                        <button type="button" onclick="toggleTag('ai')" class="px-3 py-1 bg-neutral-100 text-neutral-700 rounded-full text-sm hover:bg-saffron-100 hover:text-saffron-700 transition-colors">AI</button>
+                    </div>
+                </div>
+                <button type="submit" class="w-full saffron-gradient text-white py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity">
+                    Post Question
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Sample questions data
+        const questions = [
+            {
+                id: 1,
+                title: "How to implement authentication in a React application?",
+                description: "I'm building a React app and need to add user authentication. What's the best approach for handling login/logout and protecting routes?",
+                author: "Rajesh Kumar",
+                tags: ["react", "javascript", "authentication"],
+                votes: 15,
+                answers: 3,
+                views: 234,
+                time: "2 hours ago",
+                category: "technology"
+            },
+            {
+                id: 2,
+                title: "What are the key strategies for scaling a tech startup?",
+                description: "Looking for advice on scaling strategies for a B2B SaaS startup. What are the most important factors to consider?",
+                author: "Priya Sharma",
+                tags: ["startup", "business", "scaling"],
+                votes: 23,
+                answers: 7,
+                views: 456,
+                time: "4 hours ago",
+                category: "business"
+            },
+            {
+                id: 3,
+                title: "How does machine learning impact cricket analytics?",
+                description: "Interested in understanding how ML algorithms are being used to analyze cricket performance and predict match outcomes.",
+                author: "Arjun Patel",
+                tags: ["cricket", "machine-learning", "analytics"],
+                votes: 18,
+                answers: 5,
+                views: 321,
+                time: "6 hours ago",
+                category: "sports"
+            },
+            {
+                id: 4,
+                title: "Best practices for database optimization in Python?",
+                description: "Working with large datasets in Python. What are the most effective techniques for optimizing database queries and improving performance?",
+                author: "Sneha Reddy",
+                tags: ["python", "database", "optimization"],
+                votes: 31,
+                answers: 9,
+                views: 678,
+                time: "8 hours ago",
+                category: "technology"
+            },
+            {
+                id: 5,
+                title: "How to transition from employee to entrepreneur?",
+                description: "I've been working as a software engineer for 5 years and want to start my own company. What steps should I take to make this transition successfully?",
+                author: "Vikram Singh",
+                tags: ["entrepreneur", "career", "business"],
+                votes: 42,
+                answers: 12,
+                views: 892,
+                time: "1 day ago",
+                category: "business"
+            },
+            {
+                id: 6,
+                title: "Understanding quantum computing basics",
+                description: "Can someone explain quantum computing in simple terms? How does it differ from classical computing and what are its potential applications?",
+                author: "Meera Joshi",
+                tags: ["quantum", "computing", "physics"],
+                votes: 28,
+                answers: 6,
+                views: 445,
+                time: "1 day ago",
+                category: "science"
+            }
+        ];
+
+        let currentQuestions = questions;
+        let selectedTags = [];
+        let currentPage = 0;
+        const questionsPerPage = 10;
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            loadQuestions();
+            setupSearch();
+        });
+
+        // Navigation functions
+        function showSection(sectionId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.page-section');
+            sections.forEach(section => section.classList.remove('active'));
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Update nav links
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.classList.remove('text-saffron-600', 'border-b-2', 'border-saffron-600');
+                link.classList.add('text-neutral-700');
+            });
+        }
+
+        // Modal functions
+        function showModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        // Close modal when clicking outside
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('modal')) {
+                e.target.classList.remove('active');
+            }
+        });
+
+        // Question functions
+        function loadQuestions() {
+            const questionsList = document.getElementById('questionsList');
+            questionsList.innerHTML = '';
+            
+            currentQuestions.forEach(question => {
+                const questionCard = createQuestionCard(question);
+                questionsList.appendChild(questionCard);
+            });
+        }
+
+        function createQuestionCard(question) {
+            const card = document.createElement('div');
+            card.className = 'bg-white rounded-xl shadow-lg border border-neutral-100 p-6 hover:shadow-xl transition-shadow duration-300';
+            
+            card.innerHTML = `
+                <div class="flex items-start justify-between mb-4">
+                    <div class="flex-1">
+                        <h3 class="text-xl font-semibold text-neutral-900 mb-2 hover:text-saffron-600 cursor-pointer">
+                            ${question.title}
+                        </h3>
+                        <p class="text-neutral-600 mb-3">${question.description}</p>
+                        <div class="flex flex-wrap gap-2 mb-3">
+                            ${question.tags.map(tag => `
+                                <span class="px-3 py-1 bg-saffron-100 text-saffron-700 rounded-full text-sm font-medium">
+                                    ${tag}
+                                </span>
+                            `).join('')}
+                        </div>
+                        <div class="flex items-center text-sm text-neutral-500">
+                            <span class="mr-4">Asked by <strong class="text-neutral-700">${question.author}</strong></span>
+                            <span>${question.time}</span>
+                        </div>
+                    </div>
+                    <div class="flex flex-col items-end space-y-2 ml-6">
+                        <div class="flex items-center space-x-4 text-sm text-neutral-500">
+                            <div class="flex items-center space-x-1">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11l5-5m0 0l5 5m-5-5v12"></path>
+                                </svg>
+                                <span class="font-medium">${question.votes}</span>
+                            </div>
+                            <div class="flex items-center space-x-1">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                                </svg>
+                                <span>${question.answers}</span>
+                            </div>
+                            <div class="flex items-center space-x-1">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                </svg>
+                                <span>${question.views}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            return card;
+        }
+
+        function loadMoreQuestions() {
+            // Simulate loading more questions
+            const newQuestions = [
+                {
+                    id: 7,
+                    title: "How to optimize React component performance?",
+                    description: "Looking for best practices to optimize React components for better performance in large applications.",
+                    author: "Amit Gupta",
+                    tags: ["react", "performance", "optimization"],
+                    votes: 12,
+                    answers: 4,
+                    views: 189,
+                    time: "2 days ago",
+                    category: "technology"
+                },
+                {
+                    id: 8,
+                    title: "What makes a successful product manager?",
+                    description: "Interested in understanding the key skills and qualities that make someone excel in product management.",
+                    author: "Kavya Nair",
+                    tags: ["product-management", "career", "skills"],
+                    votes: 19,
+                    answers: 8,
+                    views: 367,
+                    time: "2 days ago",
+                    category: "business"
+                }
+            ];
+            
+            currentQuestions = [...currentQuestions, ...newQuestions];
+            loadQuestions();
+        }
+
+        // Tag functions
+        function toggleTag(tag) {
+            const index = selectedTags.indexOf(tag);
+            if (index > -1) {
+                selectedTags.splice(index, 1);
+            } else {
+                selectedTags.push(tag);
+            }
+            
+            updateTagDisplay();
+        }
+
+        function updateTagDisplay() {
+            const selectedTagsContainer = document.getElementById('selectedTags');
+            selectedTagsContainer.innerHTML = '';
+            
+            selectedTags.forEach(tag => {
+                const tagElement = document.createElement('span');
+                tagElement.className = 'px-3 py-1 bg-saffron-500 text-white rounded-full text-sm font-medium flex items-center space-x-2';
+                tagElement.innerHTML = `
+                    <span>${tag}</span>
+                    <button onclick="toggleTag('${tag}')" class="text-white hover:text-saffron-200">
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                `;
+                selectedTagsContainer.appendChild(tagElement);
+            });
+            
+            // Update tag buttons
+            const tagButtons = document.querySelectorAll('#questionModal button[onclick^="toggleTag"]');
+            tagButtons.forEach(button => {
+                const tag = button.getAttribute('onclick').match(/'([^']+)'/)[1];
+                if (selectedTags.includes(tag)) {
+                    button.classList.add('tag-selected');
+                } else {
+                    button.classList.remove('tag-selected');
+                }
+            });
+        }
+
+        // Search function
+        function setupSearch() {
+            const searchInput = document.getElementById('searchInput');
+            searchInput.addEventListener('input', function(e) {
+                const searchTerm = e.target.value.toLowerCase();
+                
+                if (searchTerm === '') {
+                    currentQuestions = questions;
+                } else {
+                    currentQuestions = questions.filter(question => 
+                        question.title.toLowerCase().includes(searchTerm) ||
+                        question.description.toLowerCase().includes(searchTerm) ||
+                        question.tags.some(tag => tag.toLowerCase().includes(searchTerm))
+                    );
+                }
+                
+                loadQuestions();
+            });
+        }
+
+        // Category filter
+        function filterByCategory(category) {
+            currentQuestions = questions.filter(question => question.category === category);
+            loadQuestions();
+            showSection('home');
+        }
+
+        // Form submissions
+        document.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (e.target.closest('#loginModal')) {
+                handleLogin();
+            } else if (e.target.closest('#signupModal')) {
+                handleSignup();
+            } else if (e.target.closest('#questionModal')) {
+                handleQuestionSubmit();
+            }
+        });
+
+        function handleLogin() {
+            // Simulate login
+            alert('Login functionality would be implemented here');
+            closeModal('loginModal');
+        }
+
+        function handleSignup() {
+            // Simulate signup
+            alert('Signup functionality would be implemented here');
+            closeModal('signupModal');
+        }
+
+        function handleQuestionSubmit() {
+            // Simulate question submission
+            alert('Question submitted successfully!');
+            closeModal('questionModal');
+            // Reset form
+            selectedTags = [];
+            updateTagDisplay();
+        }
+
+        // Add some interactive effects
+        document.addEventListener('mouseover', function(e) {
+            if (e.target.closest('.category-card')) {
+                e.target.closest('.category-card').style.transform = 'translateY(-4px)';
+            }
+        });
+
+        document.addEventListener('mouseout', function(e) {
+            if (e.target.closest('.category-card')) {
+                e.target.closest('.category-card').style.transform = 'translateY(0)';
+            }
+        });
+    </script>
+</body>
+</html>
